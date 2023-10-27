@@ -1,0 +1,36 @@
+name: Build and deploy an app
+on:
+  workflow_call:
+    inputs:
+      name:
+        description: The name of the app e.g. "terraria"
+        type: string
+        required: true
+      description:
+        description: A brief description of the app
+        type: string
+        required: true
+      file:
+        description: The path to the Dockerfile
+        type: string
+        required: true
+      tags:
+        description: List of tags
+        type: string
+        required: false
+
+jobs:
+  build_and_deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build and deploy
+        uses: ./.github/actions/build_image
+        with:
+          image_description: ${{ inputs.description }}
+          name: ${{ inputs.name }}
+          file: ${{ inputs.name }}/Dockerfile
+          context: ${{ inputs.name }}
+

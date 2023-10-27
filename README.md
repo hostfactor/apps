@@ -1,2 +1,2 @@
-# app-images
+# apps
 Officially supported images for hostfactor.io
