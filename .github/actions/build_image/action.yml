@@ -56,3 +56,5 @@ runs:
         labels: |
           "org.opencontainers.image.description=${{ inputs.image_description }}"
           "org.opencontainers.image.source=https://github.com/${{ github.repository }}"
+          "org.opencontainers.image.url=https://github.com/${{ github.repository }}"
+          "org.opencontainers.image.documentation=https://github.com/${{ github.repository }}"
