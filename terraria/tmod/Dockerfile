@@ -67,4 +67,6 @@ RUN unzip $TMOD_ZIP_FILENAME -d tModLoader && \
 
 RUN steamcmd +force_install_dir /root/terraria-server/workshop +login anonymous +app_update 1281930 +quit
 
-CMD ["/root/terraria-server/tModLoader/start-tModLoaderServer.sh"]
+COPY serverconfig.txt tModLoader/serverconfig.txt
+
+CMD ["/root/terraria-server/tModLoader/start-tModLoaderServer.sh", "-config", "serverconfig.txt"]
