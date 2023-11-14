@@ -17,10 +17,6 @@ jobs:
       - name: Get all changed app manifest files
         id: manifests
         uses: tj-actions/changed-files@v40
-        with:
-          files: |
-            **/app.yml
-            **/app.yaml
       - name: Setup go
         uses: actions/setup-go@v4
         with:
