@@ -1,0 +1,44 @@
+name: Compile app build manifest
+
+on:
+  push:
+    branches:
+      - feat/mani_build
+    paths:
+      - "**/app.yaml"
+      - "**/app.yml"
+
+jobs:
+  recompile_apps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Get all changed app manifest files
+        id: manifests
+        uses: tj-actions/changed-files@v40
+        with:
+          files: |
+            **/app.yml
+            **/app.yaml
+      - name: Setup go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: manifest/go.mod
+          cache-dependency-path: manifest/go.sum
+          check-latest: true
+      - name: Compile manifest builder
+        working-directory: manifest
+        run: |
+          go build -o /usr/local/bin/manibuild
+      - name: Compile all changed app manifests
+        run: |
+          for file in ${{ steps.manifests.outputs.all_changed_files }}; do
+            manibuild "$file was changed"
+          done
+      - name: Commit built manifests
+        uses: .github/actions/commit_changes
+        with:
+          github_token: ${{ secrets.CI_GITHUB_TOKEN }}
+          commit_message: |
+            feat(manifests): Recompile manifests

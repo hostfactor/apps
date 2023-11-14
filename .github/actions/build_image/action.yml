@@ -18,6 +18,9 @@ inputs:
     description: Short description about the image
     required: false
     default: A Host Factor image
+  build_args:
+    required: false
+    description: Docker build args
 outputs:
   sha_image_url:
     description: The full URL for the image which uses the sha tag.
@@ -47,6 +50,7 @@ runs:
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
+        build-args: ${{ inputs.build_args }}
         file: ${{ inputs.file }}
         push: true
         context: ${{ inputs.context }}

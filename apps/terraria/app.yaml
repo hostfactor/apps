@@ -1,0 +1,21 @@
+name: terraria
+author: https://github.com/eddieowens
+description: A containerized terraria server hosted at hostfactor.io
+features:
+  - name: mobile
+    context: mobile
+    tag: mobile-1.4.4.9
+  - name: tshock
+    context: tshock
+    tag: tshock-1.4.4.9
+  - name: tmod
+    context: tmod
+    tag: tmod-1.4.4.9
+    build_args:
+      TMOD_VERSION: ${{env.GITHUB_RELEASE_TAG_NAME}}
+    watch:
+      github_release:
+        repo: tModLoader/tModLoader
+  - name: vanilla
+    context: vanilla
+    tag: vanilla-1.4.4.9
