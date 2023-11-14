@@ -15,7 +15,7 @@ var manifestDir fs.FS
 func GenerateGithubActions(manifestFile, targetFolder string) error {
 	dir, manifestFilename := filepath.Split(manifestFile)
 	if manifestDir == nil {
-		manifestDir = os.DirFS(filepath.Dir(dir))
+		manifestDir = os.DirFS(dir)
 	}
 
 	b, err := fs.ReadFile(manifestDir, manifestFilename)

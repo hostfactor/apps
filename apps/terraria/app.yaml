@@ -1,6 +1,6 @@
 name: terraria
 author: https://github.com/eddieowens
-description: "A containerized terraria server hosted at hostfactor.io"
+description: A containerized terraria server hosted at hostfactor.io
 features:
   - name: mobile
     context: mobile
