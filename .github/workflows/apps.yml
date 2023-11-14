@@ -34,7 +34,7 @@ jobs:
       - name: Compile all changed app manifests
         run: |
           for file in ${{ steps.manifests.outputs.all_changed_files }}; do
-            manibuild "$file was changed" .github/workflows
+            manibuild "$(file)" .github/workflows
           done
       - name: Commit built manifests
         uses: ./.github/actions/commit_changes
