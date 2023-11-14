@@ -1,4 +1,4 @@
-name: "terraria"
+name: terraria
 author: https://github.com/eddieowens
 description: A containerized terraria server hosted at hostfactor.io
 features:
