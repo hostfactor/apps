@@ -17,6 +17,11 @@ jobs:
       - name: Get all changed app manifest files
         id: manifests
         uses: tj-actions/changed-files@v40
+        with:
+          separator: ","
+          files: |
+            apps/**/app.yaml
+            apps/**/app.yml
       - name: Setup go
         uses: actions/setup-go@v4
         with:
@@ -29,7 +34,8 @@ jobs:
           go build -o /usr/local/bin/manibuild
       - name: Compile all changed app manifests
         run: |
-          for file in ${{ steps.manifests.outputs.all_changed_files }}; do
+          IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.manifests.outputs.modified_files }}"
+          for file in "${MODIFIED_FILES_ARRAY[@]}"; do
             manibuild "$(file)" .github/workflows
           done
       - name: Commit built manifests
