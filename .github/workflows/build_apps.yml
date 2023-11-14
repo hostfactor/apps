@@ -35,9 +35,14 @@ jobs:
       - name: Compile all changed app manifests
         run: |
           IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.manifests.outputs.modified_files }}"
-          for file in "${MODIFIED_FILES_ARRAY[@]}"; do
-            manibuild "$(file)" .github/workflows
-          done
+          if [ "${#MODIFIED_FILES_ARRAY[@]}" -eq 1 ]
+          then
+            manibuild "${{ steps.manifests.outputs.modified_files }}" .github/workflows
+          else
+            for file in "${MODIFIED_FILES_ARRAY[@]}"; do
+              manibuild "$(file)" 
+            done
+          fi
       - name: Commit built manifests
         uses: ./.github/actions/commit_changes
         with:
