@@ -37,7 +37,7 @@ jobs:
             manibuild "$file was changed"
           done
       - name: Commit built manifests
-        uses: .github/actions/commit_changes
+        uses: ./.github/actions/commit_changes
         with:
           github_token: ${{ secrets.CI_GITHUB_TOKEN }}
           commit_message: |
