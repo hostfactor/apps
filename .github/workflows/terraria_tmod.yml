@@ -12,9 +12,7 @@ jobs:
   build_and_deploy_terraria_tmod:
     uses: ./.github/workflows/deploy_app.yml
     with:
-      build_args: |-
-        |
-        TMOD_VERSION=${{env.GITHUB_RELEASE_TAG_NAME}}
+      build_args: TMOD_VERSION=${{env.GITHUB_RELEASE_TAG_NAME}}
       context: apps/terraria/tmod
       file: Dockerfile
       get_github_release_tag_name: tModLoader/tModLoader
