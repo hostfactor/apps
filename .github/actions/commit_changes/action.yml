@@ -8,6 +8,11 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Configure git
+      shell: bash
+      run: |
+        git config --global user.email "ci@hostfactor.io"
+        git config --global user.name "Host Factor CI"
     - name: Commit changes
       shell: bash
       run: |
