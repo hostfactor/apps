@@ -11,6 +11,7 @@ jobs:
     uses: ./.github/workflows/deploy_app.yml
     with:
       context: apps/terraria/mobile
+      description: A containerized terraria server for mobile hosted at hostfactor.io
       file: Dockerfile
       name: terraria
       tags: mobile-1.4.4.9

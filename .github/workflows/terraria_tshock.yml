@@ -11,6 +11,7 @@ jobs:
     uses: ./.github/workflows/deploy_app.yml
     with:
       context: apps/terraria/tshock
+      description: A containerized terraria server with TShock support hosted at hostfactor.io
       file: Dockerfile
       name: terraria
       tags: tshock-1.4.4.9

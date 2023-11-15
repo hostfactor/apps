@@ -14,6 +14,7 @@ jobs:
     with:
       build_args: TMOD_VERSION=${{env.GITHUB_RELEASE_TAG_NAME}}
       context: apps/terraria/tmod
+      description: A containerized terraria server with TMod support hosted at hostfactor.io
       file: Dockerfile
       get_github_release_tag_name: tModLoader/tModLoader
       name: terraria
