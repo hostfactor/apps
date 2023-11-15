@@ -3,7 +3,7 @@ name: Compile app build manifest
 on:
   push:
     branches:
-      - feat/mani_build
+      - master
     paths:
       - "**/app.yaml"
       - "**/app.yml"

@@ -94,7 +94,7 @@ func FeatureToGithubAction(appName, manifestFilePath string, f *Feature) (*Githu
     On: &GithubActionTrigger{
       Push: &GithubActionPush{
         Branches: []string{
-          "feat/mani_build",
+          "master",
         },
         Paths: []string{
           filepath.Join(dir, f.Context, "**"),
