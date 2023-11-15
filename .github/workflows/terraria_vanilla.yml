@@ -11,6 +11,7 @@ jobs:
     uses: ./.github/workflows/deploy_app.yml
     with:
       context: apps/terraria/vanilla
+      description: A containerized vanilla terraria server hosted at hostfactor.io
       file: Dockerfile
       name: terraria
       tags: vanilla-1.4.4.9
