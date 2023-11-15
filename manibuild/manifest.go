@@ -120,7 +120,7 @@ func FeatureToGithubAction(appName, manifestFilePath string, f *Feature) (*Githu
 		buildArgs = append(buildArgs, fmt.Sprintf("%s=%s", k, v))
 	}
 	if len(buildArgs) > 0 {
-		act.Jobs[jobName].With["build_args"] = strings.Join(buildArgs, "\n")
+		act.Jobs[jobName].With["build_args"] = "|\n" + strings.Join(buildArgs, "\n")
 	}
 
 	if f.Watch != nil {
