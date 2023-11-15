@@ -28,7 +28,8 @@ RUN apt-get update && \
     apt-get install -y \
     curl \
     unzip \
-    libicu-dev
+    libicu-dev \
+    jq
 
 # install terraria
 ARG TERRARIA_VERSION=1449
@@ -53,8 +54,8 @@ RUN unzip $TERRARIA_ZIP_FILENAME -d terraria-zip && \
     rm $TERRARIA_ZIP_FILENAME && \
     rm -rf terraria-zip
 
-ARG TMOD_VERSION=2023.08.3.4
-ARG TMOD_ARTIFACT_URL=https://github.com/tModLoader/tModLoader/releases/download/v$TMOD_VERSION/tModLoader.zip
+ARG TMOD_VERSION="v2023.09.3.2"
+ARG TMOD_ARTIFACT_URL=https://github.com/tModLoader/tModLoader/releases/download/$TMOD_VERSION/tModLoader.zip
 ARG TMOD_ZIP_FILENAME=tmodloader.zip
 
 # install tmod
@@ -63,10 +64,13 @@ ADD $TMOD_ARTIFACT_URL $TMOD_ZIP_FILENAME
 RUN unzip $TMOD_ZIP_FILENAME -d tModLoader && \
     rm $TMOD_ZIP_FILENAME && \
     chmod u+x tModLoader/start-tModLoaderServer.sh && \
+    chmod u+x tModLoader/DedicatedServerUtils/manage-tModLoaderServer.sh && \
     chmod u+x tModLoader/LaunchUtils/ScriptCaller.sh
 
-RUN steamcmd +force_install_dir /root/terraria-server/workshop +login anonymous +app_update 1281930 +quit
+RUN tModLoader/DedicatedServerUtils/manage-tModLoaderServer.sh update
 
-COPY serverconfig.txt tModLoader/serverconfig.txt
+COPY start.sh start.sh
 
-CMD ["/root/terraria-server/tModLoader/start-tModLoaderServer.sh", "-config", "serverconfig.txt"]
+COPY install_mods.sh install_mods.sh
+
+ENTRYPOINT ["./tModLoader/start-tModLoaderServer.sh"]

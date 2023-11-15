@@ -1,0 +1,53 @@
+name: Compile app build manifest
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "**/app.yaml"
+      - "**/app.yml"
+      - "manibuild/**"
+
+jobs:
+  recompile_apps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CI_GITHUB_TOKEN }}
+      - name: Get all changed app manifest files
+        id: manifests
+        uses: tj-actions/changed-files@v40
+        with:
+          separator: ","
+          files: |
+            apps/**/app.yaml
+            apps/**/app.yml
+      - name: Setup go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: manibuild/go.mod
+          cache-dependency-path: manibuild/go.sum
+          check-latest: true
+      - name: Compile manifest builder
+        working-directory: manibuild
+        run: |
+          go build -o /usr/local/bin/manibuild
+      - name: Compile all changed app manifests
+        run: |
+          IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.manifests.outputs.modified_files }}"
+          if [ "${#MODIFIED_FILES_ARRAY[@]}" -eq 1 ]
+          then
+            manibuild "${{ steps.manifests.outputs.modified_files }}" .github/workflows
+          else
+            for file in "${MODIFIED_FILES_ARRAY[@]}"; do
+              manibuild "$(file)" 
+            done
+          fi
+      - name: Commit built manifests
+        uses: ./.github/actions/commit_changes
+        with:
+          commit_message: |
+            feat(manifests): Recompile manifests

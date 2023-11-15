@@ -1,0 +1,25 @@
+name: Commit and push changes
+description: Setup and push changes
+inputs:
+  commit_message:
+    description: The commit message for the push
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Configure git
+      shell: bash
+      run: |
+        git config --global user.email "ci@hostfactor.io"
+        git config --global user.name "Host Factor CI"
+    - name: Commit changes
+      shell: bash
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          git add -A
+          git commit -m "${{inputs.commit_message}}"
+          git push
+        else
+          echo "No changes";
+        fi
