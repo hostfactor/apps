@@ -7,7 +7,6 @@ on:
     paths:
       - "**/app.yaml"
       - "**/app.yml"
-      - "manibuild/**"
 
 jobs:
   recompile_apps:
