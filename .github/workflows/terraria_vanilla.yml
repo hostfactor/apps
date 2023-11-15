@@ -2,7 +2,7 @@ name: vanilla
 "on":
   push:
     branches:
-      - feat/mani_build
+      - master
     paths:
       - apps/terraria/vanilla/**
       - apps/terraria/app.yaml

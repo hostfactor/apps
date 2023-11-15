@@ -2,7 +2,7 @@ name: tshock
 "on":
   push:
     branches:
-      - feat/mani_build
+      - master
     paths:
       - apps/terraria/tshock/**
       - apps/terraria/app.yaml
