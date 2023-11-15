@@ -88,6 +88,7 @@ type GithubReleaseFeatureWatch struct {
 func FeatureToGithubAction(appName, manifestFilePath string, f *Feature) (*GithubAction, error) {
   dir := filepath.Dir(manifestFilePath)
   jobName := fmt.Sprintf("build_and_deploy_%s_%s", appName, f.Name)
+
   act := &GithubAction{
     Name: f.Name,
     On: &GithubActionTrigger{
