@@ -6,9 +6,11 @@ features:
   - name: mobile
     context: mobile
     tag: mobile-1.4.4.9
+    description: A containerized terraria server for mobile hosted at hostfactor.io
   - name: tshock
     context: tshock
     tag: tshock-1.4.4.9
+    description: A containerized terraria server with TShock support hosted at hostfactor.io
   - name: tmod
     context: tmod
     tag: tmod-1.4.4.9
@@ -17,6 +19,8 @@ features:
     watch:
       github_release:
         repo: tModLoader/tModLoader
+    description: A containerized terraria server with TMod support hosted at hostfactor.io
   - name: vanilla
     context: vanilla
     tag: vanilla-1.4.4.9
+    description: A containerized vanilla terraria server hosted at hostfactor.io

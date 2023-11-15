@@ -6,9 +6,6 @@ on:
         description: The name of the app e.g. "terraria"
         type: string
         required: true
-      context:
-        description: The folder housing the dockerfile
-        type: string
       description:
         description: A brief description of the app
         type: string
@@ -17,17 +14,17 @@ on:
         description: The path to the Dockerfile
         type: string
         required: true
+      context:
+        description: The folder housing the dockerfile
+        type: string
       tags:
         description: List of tags
         type: string
-        required: false
       build_args:
         type: string
-        required: false
         description: Docker build args
       get_github_release_tag_name:
         type: string
-        required: false
         description: Get the latest github release from a repo
 
 jobs:

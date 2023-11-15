@@ -70,11 +70,12 @@ type Manifest struct {
 }
 
 type Feature struct {
-  Name      string            `yaml:"name,omitempty" json:"name,omitempty"`
-  Tag       string            `yaml:"tag,omitempty" json:"tag,omitempty"`
-  Context   string            `yaml:"context,omitempty" json:"context,omitempty"`
-  Watch     *FeatureWatch     `yaml:"watch,omitempty" json:"watch,omitempty"`
-  BuildArgs map[string]string `yaml:"build_args,omitempty" json:"build_args,omitempty"`
+  Name        string            `yaml:"name,omitempty" json:"name,omitempty"`
+  Tag         string            `yaml:"tag,omitempty" json:"tag,omitempty"`
+  Context     string            `yaml:"context,omitempty" json:"context,omitempty"`
+  Watch       *FeatureWatch     `yaml:"watch,omitempty" json:"watch,omitempty"`
+  BuildArgs   map[string]string `yaml:"build_args,omitempty" json:"build_args,omitempty"`
+  Description string            `yaml:"description" json:"description"`
 }
 
 type FeatureWatch struct {
@@ -106,10 +107,11 @@ func FeatureToGithubAction(appName, manifestFilePath string, f *Feature) (*Githu
       jobName: {
         Uses: "./.github/workflows/deploy_app.yml",
         With: map[string]string{
-          "name":    appName,
-          "file":    "Dockerfile",
-          "context": filepath.Join(dir, f.Context),
-          "tags":    f.Tag,
+          "name":        appName,
+          "file":        "Dockerfile",
+          "context":     filepath.Join(dir, f.Context),
+          "tags":        f.Tag,
+          "description": f.Description,
         },
       },
     },
