@@ -106,7 +106,7 @@ func FeatureToGithubAction(appName, manifestFilePath string, f *Feature) (*Githu
         },
         Paths: []string{
           filepath.Join(dir, f.Context, "**"),
-          manifestFilePath,
+          filepath.Join(dir, "app.sha"),
         },
       },
     },

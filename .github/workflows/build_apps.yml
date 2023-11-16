@@ -39,9 +39,12 @@ jobs:
           IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.manifests.outputs.modified_files }}"
           if [ "${#MODIFIED_FILES_ARRAY[@]}" -eq 1 ]
           then
-            manibuild "${{ steps.manifests.outputs.modified_files }}" .github/workflows
+            file="${{ steps.manifests.outputs.modified_files }}"
+            manibuild "$(file)" .github/workflows
+            cat $file | sha256sum > $(dirname $file)/app.sha
           else
             for file in "${MODIFIED_FILES_ARRAY[@]}"; do
+              cat $file | sha256sum > $(dirname $file)/app.sha
               manibuild "$(file)" 
             done
           fi
