@@ -16,6 +16,6 @@ runs:
       id: github_release
       shell: bash
       run: |
-        tag_name="$(curl -s https://api.github.com/repos/${{inputs.get_github_release_tag_name}}/releases/latest | jq -r .tag_name)"
+        tag_name="$(curl -s https://api.github.com/repos/${{inputs.repo}}/releases/latest | jq -r .tag_name)"
         echo "GITHUB_RELEASE_TAG_NAME=$(echo $tag_name)" >> $GITHUB_ENV
         echo "tag_name=$(echo $tag_name)" >> $GITHUB_OUTPUT
