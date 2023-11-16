@@ -4,19 +4,25 @@ description: A containerized terraria server hosted at hostfactor.io
 features:
   - name: mobile
     context: mobile
-    tag: mobile-1.4.4.9
+    tags:
+      - mobile-1.4.4.9
+      - mobile-latest
     description: A containerized terraria server for mobile hosted at hostfactor.io
     build_args:
       TERRARIA_VERSION: "1449"
   - name: tshock
     context: tshock
-    tag: tshock-1.4.4.9
+    tags:
+      - tshock-1.4.4.9
+      - tshock-latest
     description: A containerized terraria server with TShock support hosted at hostfactor.io
     build_args:
       TERRARIA_VERSION: "1.4.4.9"
   - name: tmod
     context: tmod
-    tag: tmod-1.4.4.9
+    tags:
+      - tmod-1.4.4.9
+      - tmod-latest
     build_args:
       TERRARIA_VERSION: "1449"
       TMOD_VERSION: $GITHUB_RELEASE_TAG_NAME
@@ -26,7 +32,9 @@ features:
     description: A containerized terraria server with TMod support hosted at hostfactor.io
   - name: vanilla
     context: vanilla
-    tag: vanilla-1.4.4.9
+    tags:
+      - vanilla-1.4.4.9
+      - vanilla-latest
     description: A containerized vanilla terraria server hosted at hostfactor.io
     build_args:
       TERRARIA_VERSION: "1449"

@@ -70,7 +70,7 @@ type Manifest struct {
 
 type Feature struct {
   Name        string            `yaml:"name,omitempty" json:"name,omitempty"`
-  Tag         string            `yaml:"tag,omitempty" json:"tag,omitempty"`
+  Tags        []string          `yaml:"tags,omitempty" json:"tags,omitempty"`
   Context     string            `yaml:"context,omitempty" json:"context,omitempty"`
   Watch       *FeatureWatch     `yaml:"watch,omitempty" json:"watch,omitempty"`
   BuildArgs   map[string]string `yaml:"build_args,omitempty" json:"build_args,omitempty"`
@@ -117,7 +117,7 @@ func FeatureToGithubAction(appName, manifestFilePath string, f *Feature) (*Githu
     Name:             appName,
     File:             "Dockerfile",
     Context:          filepath.Join(dir, f.Context),
-    Tags:             []string{f.Tag},
+    Tags:             f.Tags,
     ImageDescription: f.Description,
     BuildArgs:        f.BuildArgs,
   })

@@ -44,9 +44,7 @@ runs:
         images: |
           ghcr.io/hostfactor/apps/${{ inputs.name }}
         tags: |
-          type=sha
           ${{ inputs.tags }}
-          latest
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
@@ -55,8 +53,6 @@ runs:
         push: true
         context: ${{ inputs.context }}
         tags: ${{ steps.meta.outputs.tags }}
-        ssh: |
-          default
         labels: |
           "org.opencontainers.image.description=${{ inputs.image_description }}"
           "org.opencontainers.image.source=https://github.com/${{ github.repository }}"
