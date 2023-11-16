@@ -18,7 +18,7 @@ jobs:
         with:
           build_args: TERRARIA_VERSION=1449
           context: apps/terraria/vanilla
-          file: Dockerfile
+          file: ""
           image_description: A containerized vanilla terraria server hosted at hostfactor.io
           name: terraria
           tags: |-

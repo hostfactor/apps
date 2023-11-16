@@ -18,7 +18,7 @@ jobs:
         with:
           build_args: TERRARIA_VERSION=1.4.4.9
           context: apps/terraria/tshock
-          file: Dockerfile
+          file: ""
           image_description: A containerized terraria server with TShock support hosted at hostfactor.io
           name: terraria
           tags: |-

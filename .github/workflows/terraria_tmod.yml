@@ -27,7 +27,7 @@ jobs:
             TERRARIA_VERSION=1449
             TMOD_VERSION=$GITHUB_RELEASE_TAG_NAME
           context: apps/terraria/tmod
-          file: Dockerfile
+          file: ""
           image_description: A containerized terraria server with TMod support hosted at hostfactor.io
           name: terraria
           tags: |-
