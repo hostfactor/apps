@@ -21,4 +21,6 @@ jobs:
           file: Dockerfile
           image_description: A containerized terraria server with TShock support hosted at hostfactor.io
           name: terraria
-          tags: tshock-1.4.4.9
+          tags: |-
+            tshock-1.4.4.9
+            tshock-latest

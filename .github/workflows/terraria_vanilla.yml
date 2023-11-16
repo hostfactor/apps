@@ -21,4 +21,6 @@ jobs:
           file: Dockerfile
           image_description: A containerized vanilla terraria server hosted at hostfactor.io
           name: terraria
-          tags: vanilla-1.4.4.9
+          tags: |-
+            vanilla-1.4.4.9
+            vanilla-latest

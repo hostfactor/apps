@@ -21,4 +21,6 @@ jobs:
           file: Dockerfile
           image_description: A containerized terraria server for mobile hosted at hostfactor.io
           name: terraria
-          tags: mobile-1.4.4.9
+          tags: |-
+            mobile-1.4.4.9
+            mobile-latest

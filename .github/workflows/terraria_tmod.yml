@@ -30,4 +30,6 @@ jobs:
           file: Dockerfile
           image_description: A containerized terraria server with TMod support hosted at hostfactor.io
           name: terraria
-          tags: tmod-1.4.4.9
+          tags: |-
+            tmod-1.4.4.9
+            tmod-latest
