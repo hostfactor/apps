@@ -7,7 +7,6 @@ import (
   "io/fs"
   "os"
   "path/filepath"
-  "strings"
 )
 
 var manifestDir fs.FS
@@ -90,6 +89,14 @@ func FeatureToGithubAction(appName, manifestFilePath string, f *Feature) (*Githu
   dir := filepath.Dir(manifestFilePath)
   jobName := fmt.Sprintf("build_and_deploy_%s_%s", appName, f.Name)
 
+  job := GithubActionJob{
+    Name: fmt.Sprintf("Build and deploy %s: %s", appName, f.Name),
+    Steps: []GithubActionJobStep{
+      CheckoutGithubAction,
+    },
+    RunsOn: "ubuntu-latest",
+  }
+
   act := &GithubAction{
     Name: f.Name,
     On: &GithubActionTrigger{
@@ -103,28 +110,17 @@ func FeatureToGithubAction(appName, manifestFilePath string, f *Feature) (*Githu
         },
       },
     },
-    Jobs: map[string]GithubActionJob{
-      jobName: {
-        Uses: "./.github/workflows/deploy_app.yml",
-        With: map[string]string{
-          "name":        appName,
-          "file":        "Dockerfile",
-          "context":     filepath.Join(dir, f.Context),
-          "tags":        f.Tag,
-          "description": f.Description,
-        },
-      },
-    },
-    Env: map[string]string{},
+    Jobs: map[string]GithubActionJob{},
   }
 
-  buildArgs := make([]string, 0, len(f.BuildArgs))
-  for k, v := range f.BuildArgs {
-    buildArgs = append(buildArgs, fmt.Sprintf("%s=%s", k, v))
-  }
-  if len(buildArgs) > 0 {
-    act.Jobs[jobName].With["build_args"] = strings.Join(buildArgs, "\n")
-  }
+  buildImageStep := BuildImageGithubAction(BuildImageGithubActionSpec{
+    Name:             appName,
+    File:             "Dockerfile",
+    Context:          filepath.Join(dir, f.Context),
+    Tags:             []string{f.Tag},
+    ImageDescription: f.Description,
+    BuildArgs:        f.BuildArgs,
+  })
 
   if f.Watch != nil {
     act.On.Schedule = []GithubActionScheduleCron{
@@ -133,9 +129,14 @@ func FeatureToGithubAction(appName, manifestFilePath string, f *Feature) (*Githu
       },
     }
     if f.Watch.GithubRelease != nil {
-      act.Jobs[jobName].With["get_github_release_tag_name"] = f.Watch.GithubRelease.Repo
+      st, _ := GetLatestGithubReleaseAction(f.Watch.GithubRelease.Repo)
+      job.Steps = append(job.Steps, st)
     }
   }
+
+  job.Steps = append(job.Steps, buildImageStep)
+
+  act.Jobs[jobName] = job
 
   return act, nil
 }

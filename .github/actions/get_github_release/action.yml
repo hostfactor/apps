@@ -1,0 +1,21 @@
+name: Get latest Github release
+description: Get the latest github release
+inputs:
+  repo:
+    description: The repo housing the release e.g. hostfactor/apps
+    required: true
+outputs:
+  tag_name:
+    description: The tag name of the latest release
+    value: ${{ steps.github_release.outputs.tag_name }}
+
+runs:
+  using: composite
+  steps:
+    - name: Get Github release tag name
+      id: github_release
+      shell: bash
+      run: |
+        tag_name="$(curl -s https://api.github.com/repos/${{inputs.get_github_release_tag_name}}/releases/latest | jq -r .tag_name)"
+        echo 'GITHUB_RELEASE_TAG_NAME=$tag_name' >> $GITHUB_ENV
+        echo 'tag_name=$tag_name' >> $GITHUB_OUTPUT

@@ -1,0 +1,25 @@
+name: Build and deploy app image
+description: Build and deploy an app image
+inputs:
+  commit_message:
+    description: The commit message for the push
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Get Github release tag name
+      if: ${{ inputs.get_github_release_tag_name }}
+      shell: bash
+      run: |
+        tag_name="$(curl -s https://api.github.com/repos/${{inputs.get_github_release_tag_name}}/releases/latest | jq -r .tag_name)"
+        echo 'GITHUB_RELEASE_TAG_NAME=$tag_name' >> $GITHUB_ENV
+    - name: Build and deploy
+      uses: ./.github/actions/build_image
+      with:
+        image_description: ${{ inputs.description }}
+        name: ${{ inputs.name }}
+        file: ${{ inputs.file }}
+        context: ${{ inputs.context }}
+        tags: ${{ inputs.tags }}
+        build_args: ${{ inputs.build_args }}
