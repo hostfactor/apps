@@ -40,12 +40,12 @@ jobs:
           if [ "${#MODIFIED_FILES_ARRAY[@]}" -eq 1 ]
           then
             file="${{ steps.manifests.outputs.modified_files }}"
-            manibuild "$(file)" .github/workflows
+            manibuild $file .github/workflows
             cat $file | sha256sum > $(dirname $file)/app.sha
           else
             for file in "${MODIFIED_FILES_ARRAY[@]}"; do
               cat $file | sha256sum > $(dirname $file)/app.sha
-              manibuild "$(file)" 
+              manibuild $file .github/workflows
             done
           fi
       - name: Commit built manifests
