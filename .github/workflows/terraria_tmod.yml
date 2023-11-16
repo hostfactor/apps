@@ -24,8 +24,8 @@ jobs:
         name: Build and deploy image
         with:
           build_args: |-
-            TMOD_VERSION=${{ steps.github_release.outputs.tag_name }}
             TERRARIA_VERSION=1449
+            TMOD_VERSION=${{ steps.github_release.outputs.tag_name }}
           context: apps/terraria/tmod
           file: ""
           image_description: A containerized terraria server with TMod support hosted at hostfactor.io
