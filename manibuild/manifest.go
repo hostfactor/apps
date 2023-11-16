@@ -115,7 +115,6 @@ func FeatureToGithubAction(appName, manifestFilePath string, f *Feature) (*Githu
 
   buildImageStep := BuildImageGithubAction(BuildImageGithubActionSpec{
     Name:             appName,
-    File:             "Dockerfile",
     Context:          filepath.Join(dir, f.Context),
     Tags:             f.Tags,
     ImageDescription: f.Description,
