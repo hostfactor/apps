@@ -1,0 +1,24 @@
+name: vanilla
+"on":
+  push:
+    branches:
+      - master
+    paths:
+      - apps/terraria/vanilla/**
+      - apps/terraria/app.yaml
+jobs:
+  build_and_deploy_terraria_vanilla:
+    name: 'Build and deploy terraria: vanilla'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout
+      - uses: ./.github/actions/build_image
+        name: Build and deploy image
+        with:
+          build_args: TERRARIA_VERSION=1449
+          context: apps/terraria/vanilla
+          file: Dockerfile
+          image_description: A containerized vanilla terraria server hosted at hostfactor.io
+          name: terraria
+          tags: vanilla-1.4.4.9

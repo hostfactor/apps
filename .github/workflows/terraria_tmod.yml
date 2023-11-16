@@ -1,0 +1,33 @@
+name: tmod
+"on":
+  schedule:
+    - cron: 0 */12 * * *
+  push:
+    branches:
+      - master
+    paths:
+      - apps/terraria/tmod/**
+      - apps/terraria/app.yaml
+jobs:
+  build_and_deploy_terraria_tmod:
+    name: 'Build and deploy terraria: tmod'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout
+      - uses: ./.github/actions/get_github_release
+        name: Get Github release
+        with:
+          repo: tModLoader/tModLoader
+        id: github_release
+      - uses: ./.github/actions/build_image
+        name: Build and deploy image
+        with:
+          build_args: |-
+            TERRARIA_VERSION=1449
+            TMOD_VERSION=$GITHUB_RELEASE_TAG_NAME
+          context: apps/terraria/tmod
+          file: Dockerfile
+          image_description: A containerized terraria server with TMod support hosted at hostfactor.io
+          name: terraria
+          tags: tmod-1.4.4.9

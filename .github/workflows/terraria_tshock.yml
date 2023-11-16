@@ -1,0 +1,24 @@
+name: tshock
+"on":
+  push:
+    branches:
+      - master
+    paths:
+      - apps/terraria/tshock/**
+      - apps/terraria/app.yaml
+jobs:
+  build_and_deploy_terraria_tshock:
+    name: 'Build and deploy terraria: tshock'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout
+      - uses: ./.github/actions/build_image
+        name: Build and deploy image
+        with:
+          build_args: TERRARIA_VERSION=1.4.4.9
+          context: apps/terraria/tshock
+          file: Dockerfile
+          image_description: A containerized terraria server with TShock support hosted at hostfactor.io
+          name: terraria
+          tags: tshock-1.4.4.9
