@@ -5,7 +5,7 @@ name: tshock
       - master
     paths:
       - apps/terraria/tshock/**
-      - apps/terraria/app.yaml
+      - apps/terraria/app.sha
 jobs:
   build_and_deploy_terraria_tshock:
     name: 'Build and deploy terraria: tshock'
