@@ -8,23 +8,13 @@ COPY bootstrap.sh /tshock/bootstrap.sh
 
 ARG TSHOCK_VERSION="v5.2.0"
 ARG TERRARIA_VERSION="1.4.4.9"
+ARG TSHOCK_ZIP='TShock-5.2-for-Terraria-$TERRARIA_VERSION-linux-x64-Release.zip'
 
 # Download and unpack TShock
-RUN set -eux; \
-    arch="$(apk --print-arch)"; \
-    case "$arch" in \
-        'x86_64') \
-            export TSHOCKZIP='TShock-5.2-for-Terraria-$TERRARIA_VERSION-linux-x64-Release.zip'; \
-            ;; \
-        'aarch64') \
-            export TSHOCKZIP='TShock-5.2-for-Terraria-$TERRARIA_VERSION-linux-arm64-Release.zip'; \
-            ;; \
-        *) echo >&2 "error: unsupported architecture '$arch'."; exit 1 ;; \
-    esac; \
-    curl -L -o /$TSHOCKZIP https://github.com/Pryaxis/TShock/releases/download/$TSHOCK_VERSION/$TSHOCKZIP; \
-    unzip $TSHOCKZIP -d /tshock ; \
+RUN curl -L -o /$TSHOCK_ZIP https://github.com/Pryaxis/TShock/releases/download/$TSHOCK_VERSION/$TSHOCK_ZIP; \
+    unzip $TSHOCK_ZIP -d /tshock ; \
     tar -xvf /tshock/*.tar -C /tshock ; \
-    rm $TSHOCKZIP ; \
+    rm $TSHOCK_ZIP ; \
     chmod +x /tshock/TShock.Server ; \
     # add executable perm to bootstrap
     chmod +x /tshock/bootstrap.sh

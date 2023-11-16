@@ -69,8 +69,6 @@ RUN unzip $TMOD_ZIP_FILENAME -d tModLoader && \
 
 RUN tModLoader/DedicatedServerUtils/manage-tModLoaderServer.sh update
 
-COPY start.sh start.sh
-
 COPY install_mods.sh install_mods.sh
 
 ENTRYPOINT ["./tModLoader/start-tModLoaderServer.sh"]
