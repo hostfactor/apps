@@ -6,12 +6,13 @@ RUN apk add --update-cache \
 # add the bootstrap file
 COPY bootstrap.sh /tshock/bootstrap.sh
 
-ARG TSHOCK_VERSION="v5.2.0"
-ARG TERRARIA_VERSION="1.4.4.9"
-ARG TSHOCK_ZIP='TShock-5.2-for-Terraria-$TERRARIA_VERSION-linux-x64-Release.zip'
+ARG TSHOCK_VERSION=v5.2.0
+ARG TERRARIA_VERSION=1.4.4.9
+ARG TSHOCK_ZIP="TShock-5.2-for-Terraria-$TERRARIA_VERSION-linux-x64-Release.zip"
 
 # Download and unpack TShock
-RUN curl -L -o /$TSHOCK_ZIP https://github.com/Pryaxis/TShock/releases/download/$TSHOCK_VERSION/$TSHOCK_ZIP; \
+RUN set -eux; \
+    curl -L -o $TSHOCK_ZIP https://github.com/Pryaxis/TShock/releases/download/$TSHOCK_VERSION/$TSHOCK_ZIP; \
     unzip $TSHOCK_ZIP -d /tshock ; \
     tar -xvf /tshock/*.tar -C /tshock ; \
     rm $TSHOCK_ZIP ; \
