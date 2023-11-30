@@ -20,6 +20,9 @@ ENV LANGUAGE 'en_US:en'
 # Create symlink for executable
 RUN ln -s /usr/games/steamcmd /usr/bin/steamcmd
 
+RUN mkdir -p /root/.steam/sdk64 &&  \
+    ln -s /root/.steam/steamcmd/linux64/steamclient.so /root/.steam/sdk64/steamclient.so
+
 FROM install-steam as install-terraria
 
 WORKDIR /root/terraria-server
@@ -58,6 +61,11 @@ ARG TMOD_VERSION="v2023.09.3.2"
 ARG TMOD_ARTIFACT_URL=https://github.com/tModLoader/tModLoader/releases/download/$TMOD_VERSION/tModLoader.zip
 ARG TMOD_ZIP_FILENAME=tmodloader.zip
 
+ENV CONFIGPATH=/config
+ENV CONFIG_FILENAME="serverconfig.txt"
+ENV MOD_PATH=/root/terraria-server/tModLoader/Mods
+ENV STEAM_LOBBY=friends
+
 # install tmod
 ADD $TMOD_ARTIFACT_URL $TMOD_ZIP_FILENAME
 
@@ -71,4 +79,6 @@ RUN tModLoader/DedicatedServerUtils/manage-tModLoaderServer.sh update
 
 COPY install_mods.sh install_mods.sh
 
-ENTRYPOINT ["./tModLoader/start-tModLoaderServer.sh"]
+COPY bootstrap.sh bootstrap.sh
+
+ENTRYPOINT [ "/bin/bash", "bootstrap.sh" ]

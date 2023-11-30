@@ -2,7 +2,7 @@
 
 enabled_path=/root/terraria-server/tModLoader/Mods/enabled.json
 
-mkdir -p "$(dirname enabled_path)"
+mkdir -p "$(dirname $enabled_path)"
 
 move_mod () {
   filename=$(basename "$1")
