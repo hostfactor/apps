@@ -6,6 +6,7 @@ name: mobile
     paths:
       - apps/terraria/mobile/**
       - apps/terraria/app.sha
+  workflow_dispatch: {}
 jobs:
   build_and_deploy_terraria_mobile:
     name: 'Build and deploy terraria: mobile'

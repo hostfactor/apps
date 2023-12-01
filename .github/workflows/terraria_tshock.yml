@@ -6,6 +6,7 @@ name: tshock
     paths:
       - apps/terraria/tshock/**
       - apps/terraria/app.sha
+  workflow_dispatch: {}
 jobs:
   build_and_deploy_terraria_tshock:
     name: 'Build and deploy terraria: tshock'
