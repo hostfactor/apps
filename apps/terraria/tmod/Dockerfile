@@ -57,7 +57,7 @@ RUN unzip $TERRARIA_ZIP_FILENAME -d terraria-zip && \
     rm $TERRARIA_ZIP_FILENAME && \
     rm -rf terraria-zip
 
-ARG TMOD_VERSION="v2023.09.3.2"
+ARG TMOD_VERSION
 ARG TMOD_ARTIFACT_URL=https://github.com/tModLoader/tModLoader/releases/download/$TMOD_VERSION/tModLoader.zip
 ARG TMOD_ZIP_FILENAME=tmodloader.zip
 
