@@ -75,8 +75,6 @@ RUN unzip $TMOD_ZIP_FILENAME -d tModLoader && \
     chmod u+x tModLoader/DedicatedServerUtils/manage-tModLoaderServer.sh && \
     chmod u+x tModLoader/LaunchUtils/ScriptCaller.sh
 
-RUN tModLoader/DedicatedServerUtils/manage-tModLoaderServer.sh update
-
 COPY install_mods.sh install_mods.sh
 
 COPY bootstrap.sh bootstrap.sh

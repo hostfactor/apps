@@ -6,4 +6,6 @@ else
   ./install_mods.sh $TMOD_MODS
 fi
 
-./tModLoader/start-tModLoaderServer.sh -u anonymous -config "$CONFIGPATH/$CONFIG_FILENAME" -modpath "$MOD_PATH" -lobby "$STEAM_LOBBY" -nosteam
+tModLoader/DedicatedServerUtils/manage-tModLoaderServer.sh update -u anonymous
+
+./tModLoader/start-tModLoaderServer.sh --update -u anonymous -config "$CONFIGPATH/$CONFIG_FILENAME" -modpath "$MOD_PATH" -lobby "$STEAM_LOBBY" -nosteam
