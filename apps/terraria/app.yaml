@@ -1,41 +1,44 @@
 name: terraria
 author: https://github.com/eddieowens
 description: A containerized terraria server hosted at hostfactor.io
-
-features:
+builds:
   - name: mobile
-    context: mobile
-    tags:
-      - mobile-1.4.4.9
-      - mobile-latest
     description: A containerized terraria server for mobile hosted at hostfactor.io
-    build_args:
-      TERRARIA_VERSION: "1449"
+    spec:
+      context: mobile
+      tags:
+        - mobile-1.4.4.9
+        - mobile-latest
+      build_args:
+        TERRARIA_VERSION: "1449"
   - name: tshock
-    context: tshock
-    tags:
-      - tshock-1.4.4.9
-      - tshock-latest
     description: A containerized terraria server with TShock support hosted at hostfactor.io
-    build_args:
-      TERRARIA_VERSION: "1.4.4.9"
+    spec:
+      build_args:
+        TERRARIA_VERSION: "1.4.4.9"
+      context: tshock
+      tags:
+        - tshock-1.4.4.9
+        - tshock-latest
   - name: tmod
-    context: tmod
-    tags:
-      - tmod-1.4.4.9
-      - tmod-latest
-    build_args:
-      TERRARIA_VERSION: "1449"
-      TMOD_VERSION: ${{ steps.github_release.outputs.tag_name }}
+    description: A containerized terraria server with TMod support hosted at hostfactor.io
+    spec:
+      context: tmod
+      tags:
+        - tmod-1.4.4.9
+        - tmod-latest
+      build_args:
+        TERRARIA_VERSION: "1449"
+        TMOD_VERSION: ${{ steps.github_release.outputs.tag_name }}
     watch:
       github_release:
         repo: tModLoader/tModLoader
-    description: A containerized terraria server with TMod support hosted at hostfactor.io
   - name: vanilla
-    context: vanilla
-    tags:
-      - vanilla-1.4.4.9
-      - vanilla-latest
     description: A containerized vanilla terraria server hosted at hostfactor.io
-    build_args:
-      TERRARIA_VERSION: "1449"
+    spec:
+      context: vanilla
+      tags:
+        - vanilla-1.4.4.9
+        - vanilla-latest
+      build_args:
+        TERRARIA_VERSION: "1449"
