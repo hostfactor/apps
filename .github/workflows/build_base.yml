@@ -5,6 +5,7 @@ name: base
       - master
     paths:
       - images/base/**
+  workflow_dispatch: { }
 jobs:
   build_and_deploy_base:
     name: 'Build and deploy base image'
@@ -19,4 +20,4 @@ jobs:
           image_description: A base image to build apps for hostfactor.io
           name: base
           tags: |-
-            base
+            latest
