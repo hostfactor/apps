@@ -1,0 +1,22 @@
+name: base
+"on":
+  push:
+    branches:
+      - master
+    paths:
+      - images/base/**
+jobs:
+  build_and_deploy_base:
+    name: 'Build and deploy base image'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout
+      - uses: ./.github/actions/build_image
+        name: Build and deploy image
+        with:
+          context: images/base
+          image_description: A base image to build apps for hostfactor.io
+          name: base
+          tags: |-
+            base
