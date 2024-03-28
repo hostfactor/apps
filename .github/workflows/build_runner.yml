@@ -1,14 +1,14 @@
-name: base-builder
+name: base-runner
 "on":
   push:
     branches:
       - master
     paths:
-      - images/base-builder/**
+      - images/base-runner/**
   workflow_dispatch: { }
 jobs:
-  build_and_push_base_builder:
-    name: 'Build the base builder image'
+  build_and_push_base_runner:
+    name: 'Build and push the base runner image'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,8 +16,8 @@ jobs:
       - uses: ./.github/actions/build_image
         name: Build and deploy image
         with:
-          context: images/base-builder
-          image_description: A base image to build apps for hostfactor.io
-          name: base-builder
+          context: images/base-runner
+          image_description: A base image to run apps for hostfactor.io
+          name: base-runner
           tags: |-
             latest

@@ -4,30 +4,6 @@ package manifest;
 
 option go_package = "github.com/hostfactor/apps/gen/go/manifest";
 
-
-//type Manifest struct {
-//	Name        string    `yaml:"name,omitempty" json:"name,omitempty"`
-//	Author      string    `yaml:"author,omitempty" json:"author,omitempty"`
-//	Description string    `yaml:"description,omitempty" json:"description,omitempty"`
-//	Features    []Feature `yaml:"features,omitempty" json:"features,omitempty"`
-//}
-//
-//type Feature struct {
-//	Name        string            `yaml:"name,omitempty" json:"name,omitempty"`
-//	Tags        []string          `yaml:"tags,omitempty" json:"tags,omitempty"`
-//	Context     string            `yaml:"context,omitempty" json:"context,omitempty"`
-//	Watch       *FeatureWatch     `yaml:"watch,omitempty" json:"watch,omitempty"`
-//	BuildArgs   map[string]string `yaml:"build_args,omitempty" json:"build_args,omitempty"`
-//	Description string            `yaml:"description" json:"description"`
-//}
-//
-//type FeatureWatch struct {
-//	GithubRelease *GithubReleaseFeatureWatch `yaml:"github_release,omitempty" json:"github_release,omitempty"`
-//}
-//
-//type GithubReleaseFeatureWatch struct {
-//	Repo string `yaml:"repo,omitempty" json:"repo,omitempty"`
-//}
 message AppManifest {
   // The name of the container.
   string name = 1;
@@ -36,8 +12,6 @@ message AppManifest {
   // A short description for the container
   string description = 3;
   repeated Build builds = 4;
-  // Images that are built prior to building the app. Can be used for multi-stage builds.
-  repeated BuildSpec dependencies = 5;
 }
 
 message BuildSpec {

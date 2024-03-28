@@ -1,0 +1,12 @@
+name: palworld
+author: https://github.com/eddieowens
+description: A containerized palworld server hosted at hostfactor.io
+builds:
+  - name: main
+    description: A containerized palworld server for hostfactor.io
+    spec:
+      context: palworld
+      tags:
+        - ${{ steps.version.outputs.version }}
+      build_args:
+        VERSION: ${{ steps.version.outputs.version }}
