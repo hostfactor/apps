@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/Feature",
+  "definitions": {
+    "Feature": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the feature. Used as a post-fix for identifying this particular app."
+        },
+        "build": {
+          "$ref": "#/definitions/manifest.BuildSpec",
+          "additionalProperties": true
+        },
+        "watch": {
+          "$ref": "#/definitions/manifest.FeatureWatch",
+          "additionalProperties": true
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Feature",
+      "description": "Generates an image under the scope of the app."
+    },
+    "manifest.BuildSpec": {
+      "properties": {
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "context": {
+          "type": "string",
+          "description": "The docker context."
+        },
+        "build_args": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Build Spec"
+    },
+    "manifest.FeatureWatch": {
+      "properties": {
+        "github_release": {
+          "$ref": "#/definitions/manifest.FeatureWatch.GithubRelease",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Feature Watch"
+    },
+    "manifest.FeatureWatch.GithubRelease": {
+      "properties": {
+        "repo": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Github Release"
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/AppManifest",
+  "definitions": {
+    "AppManifest": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the container."
+        },
+        "author": {
+          "type": "string",
+          "description": "The author of the container"
+        },
+        "description": {
+          "type": "string",
+          "description": "A short description for the container"
+        },
+        "builds": {
+          "items": {
+            "$ref": "#/definitions/manifest.Build"
+          },
+          "type": "array"
+        },
+        "dependencies": {
+          "items": {
+            "$ref": "#/definitions/manifest.BuildSpec"
+          },
+          "type": "array",
+          "description": "Images that are built prior to building the app. Can be used for multi-stage builds."
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "title": "App Manifest",
+      "description": "type Manifest struct {\tName        string    `yaml:\"name,omitempty\" json:\"name,omitempty\"`\tAuthor      string    `yaml:\"author,omitempty\" json:\"author,omitempty\"`\tDescription string    `yaml:\"description,omitempty\" json:\"description,omitempty\"`\tFeatures    []Feature `yaml:\"features,omitempty\" json:\"features,omitempty\"`}type Feature struct {\tName        string            `yaml:\"name,omitempty\" json:\"name,omitempty\"`\tTags        []string          `yaml:\"tags,omitempty\" json:\"tags,omitempty\"`\tContext     string            `yaml:\"context,omitempty\" json:\"context,omitempty\"`\tWatch       *FeatureWatch     `yaml:\"watch,omitempty\" json:\"watch,omitempty\"`\tBuildArgs   map[string]string `yaml:\"build_args,omitempty\" json:\"build_args,omitempty\"`\tDescription string            `yaml:\"description\" json:\"description\"`}type FeatureWatch struct {\tGithubRelease *GithubReleaseFeatureWatch `yaml:\"github_release,omitempty\" json:\"github_release,omitempty\"`}type GithubReleaseFeatureWatch struct {\tRepo string `yaml:\"repo,omitempty\" json:\"repo,omitempty\"`}"
+    },
+    "manifest.Build": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the feature. Used as a post-fix for identifying this particular app."
+        },
+        "spec": {
+          "$ref": "#/definitions/manifest.BuildSpec",
+          "additionalProperties": true
+        },
+        "watch": {
+          "$ref": "#/definitions/manifest.FeatureWatch",
+          "additionalProperties": true
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Build",
+      "description": "Generates an image under the scope of the app."
+    },
+    "manifest.BuildSpec": {
+      "properties": {
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "context": {
+          "type": "string",
+          "description": "The docker context."
+        },
+        "build_args": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Build Spec"
+    },
+    "manifest.FeatureWatch": {
+      "properties": {
+        "github_release": {
+          "$ref": "#/definitions/manifest.FeatureWatch.GithubRelease",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Feature Watch"
+    },
+    "manifest.FeatureWatch.GithubRelease": {
+      "properties": {
+        "repo": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Github Release"
+    }
+  }
+}

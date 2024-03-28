@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/BuildSpec",
+  "definitions": {
+    "BuildSpec": {
+      "properties": {
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "context": {
+          "type": "string",
+          "description": "The docker context."
+        },
+        "build_args": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Build Spec"
+    }
+  }
+}

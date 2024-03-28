@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/FeatureWatch",
+  "definitions": {
+    "FeatureWatch": {
+      "properties": {
+        "github_release": {
+          "$ref": "#/definitions/manifest.FeatureWatch.GithubRelease",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Feature Watch"
+    },
+    "manifest.FeatureWatch.GithubRelease": {
+      "properties": {
+        "repo": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Github Release"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package manifest;
+
+option go_package = "github.com/hostfactor/apps/gen/go/manifest";
+
+
+//type Manifest struct {
+//	Name        string    `yaml:"name,omitempty" json:"name,omitempty"`
+//	Author      string    `yaml:"author,omitempty" json:"author,omitempty"`
+//	Description string    `yaml:"description,omitempty" json:"description,omitempty"`
+//	Features    []Feature `yaml:"features,omitempty" json:"features,omitempty"`
+//}
+//
+//type Feature struct {
+//	Name        string            `yaml:"name,omitempty" json:"name,omitempty"`
+//	Tags        []string          `yaml:"tags,omitempty" json:"tags,omitempty"`
+//	Context     string            `yaml:"context,omitempty" json:"context,omitempty"`
+//	Watch       *FeatureWatch     `yaml:"watch,omitempty" json:"watch,omitempty"`
+//	BuildArgs   map[string]string `yaml:"build_args,omitempty" json:"build_args,omitempty"`
+//	Description string            `yaml:"description" json:"description"`
+//}
+//
+//type FeatureWatch struct {
+//	GithubRelease *GithubReleaseFeatureWatch `yaml:"github_release,omitempty" json:"github_release,omitempty"`
+//}
+//
+//type GithubReleaseFeatureWatch struct {
+//	Repo string `yaml:"repo,omitempty" json:"repo,omitempty"`
+//}
+message AppManifest {
+  // The name of the container.
+  string name = 1;
+  // The author of the container
+  string author = 2;
+  // A short description for the container
+  string description = 3;
+  repeated Build builds = 4;
+  // Images that are built prior to building the app. Can be used for multi-stage builds.
+  repeated BuildSpec dependencies = 5;
+}
+
+message BuildSpec {
+  repeated string tags = 1;
+  // The docker context.
+  string context = 2;
+  map<string, string> build_args = 3 [json_name = "build_args"];
+}
+
+// Generates an image under the scope of the app.
+message Build {
+  // The name of the feature. Used as a post-fix for identifying this particular app.
+  string name = 1;
+  BuildSpec spec = 2;
+  FeatureWatch watch = 3;
+  string description = 4;
+}
+
+message FeatureWatch {
+  message GithubRelease {
+    string repo = 1;
+  }
+
+  optional GithubRelease github_release = 1 [json_name = "github_release"];
+}
