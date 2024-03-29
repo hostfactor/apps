@@ -19,3 +19,5 @@ ENV LANGUAGE 'en_US:en'
 
 # Create symlink for executable
 RUN ln -s /usr/games/steamcmd /usr/bin/steamcmd
+
+RUN steamcmd +quit

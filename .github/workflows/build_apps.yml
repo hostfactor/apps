@@ -24,16 +24,8 @@ jobs:
           files: |
             apps/**/app.yaml
             apps/**/app.yml
-      - name: Setup go
-        uses: actions/setup-go@v4
-        with:
-          go-version-file: manibuild/go.mod
-          cache-dependency-path: manibuild/go.sum
-          check-latest: true
-      - name: Compile manifest builder
-        working-directory: manibuild
-        run: |
-          go build -o /usr/local/bin/manibuild
+      - name: Compile manibuild
+        uses: ./.github/actions/compile_manibuild
       - name: Compile all changed app manifests
         run: |
           IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.manifests.outputs.modified_files }}"

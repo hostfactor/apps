@@ -1,0 +1,17 @@
+name: Compile manibuild
+description: Compile manibuild
+
+runs:
+  using: composite
+  steps:
+    - name: Setup go
+      uses: actions/setup-go@v4
+      with:
+        go-version-file: manibuild/go.mod
+        cache-dependency-path: manibuild/go.sum
+        check-latest: true
+    - name: Compile manifest builder
+      working-directory: manibuild
+      shell: bash
+      run: |
+        go build -o /usr/local/bin/manibuild
