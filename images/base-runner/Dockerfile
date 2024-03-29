@@ -1,6 +1,5 @@
 FROM debian:stable-slim
 
-
 ARG HOME=/home/hostfactor
 ARG USER=hostfactor
 ARG GROUP=hostfactor
@@ -22,8 +21,8 @@ RUN mkdir -p $HOME/.steam \
  && ln -s /root/.steam/sdk32/steamclient.so $HOME/.steam/sdk32/steamservice.so \
  && ln -s /root/.steam/sdk64/steamclient.so $HOME/.steam/sdk64/steamservice.so
 
-WORKDIR $HOME
+RUN chown -R $UID:$GID $HOME
 
-RUN chown -R $UID:$GID .
+WORKDIR $HOME
 
 USER $UID
