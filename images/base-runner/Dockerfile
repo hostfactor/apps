@@ -15,7 +15,7 @@ ENV GID=$GID
 RUN groupadd -g $GID $GROUP && \
     useradd -M -s /bin/bash -d $HOME -g $GID -u $UID $USER
 
-RUN mkdir -p $HOME/.steam \
+RUN mkdir -p $HOME/.steam/sdk32 && mkdir -p $HOME/.steam/sdk64 \
  && ln -s /root/.local/share/Steam/steamcmd/linux32 $HOME/.steam/sdk32 \
  && ln -s /root/.local/share/Steam/steamcmd/linux64 $HOME/.steam/sdk64 \
  && ln -s /root/.steam/sdk32/steamclient.so $HOME/.steam/sdk32/steamservice.so \
