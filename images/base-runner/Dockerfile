@@ -23,6 +23,8 @@ RUN mkdir -p $HOME/.steam/sdk32 && mkdir -p $HOME/.steam/sdk64 \
 
 RUN chown -R $UID:$GID $HOME
 
+RUN chown -R $UID:$GID /root/.steam
+
 WORKDIR $HOME
 
 USER $UID
