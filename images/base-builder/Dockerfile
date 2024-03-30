@@ -1,28 +1,51 @@
-FROM steamcmd/steamcmd
+FROM debian:bookworm-slim
 
-ARG HOME=/home/hostfactor
 ARG USER=hostfactor
-ARG GROUP=hostfactor
-ARG UID=1000
-ARG GID=1000
+ARG HOME=/home/$USER
+ARG GROUP=$USER
+ARG PUID=1000
+ARG PGID=1000
 
 ENV HOME=$HOME
 ENV USER=$USER
 ENV GROUP=$GROUP
-ENV UID=$UID
-ENV GID=$GID
+ENV PUID=$PUID
+ENV PGID=$PGID
 
-RUN groupadd -g $GID $GROUP && \
-    useradd -M -s /bin/bash -d $HOME -g $GID -u $UID $USER
+ENV STEAMCMDDIR "${HOME}/steamcmd"
 
-RUN mkdir -p $HOME/.steam/sdk32 && mkdir -p $HOME/.steam/sdk64 \
- && mv /root/.local/share/Steam/steamcmd/linux32/* $HOME/.steam/sdk32 \
- && mv /root/.local/share/Steam/steamcmd/linux64/* $HOME/.steam/sdk64
+RUN groupadd -g $PGID $GROUP && \
+    useradd -u "${PUID}" -g $PGID -m "${USER}"
 
-RUN chown -R $UID:$GID $HOME
+RUN set -x \
+	# Install, update & upgrade packages
+	&& apt-get update \
+	&& apt-get install -y --no-install-recommends --no-install-suggests \
+		lib32stdc++6=12.2.0-14 \
+		lib32gcc-s1=12.2.0-14 \
+		ca-certificates=20230311 \
+		nano=7.2-1 \
+		curl=7.88.1-10+deb12u5 \
+		locales=2.36-9+deb12u4 \
+	&& sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+	&& dpkg-reconfigure --frontend=noninteractive locales \
+	# Download SteamCMD, execute as user
+	&& su "${USER}" -c \
+		"mkdir -p \"${STEAMCMDDIR}\" \
+                && curl -fsSL 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar xvzf - -C \"${STEAMCMDDIR}\" \
+                && \"./${STEAMCMDDIR}/steamcmd.sh\" +quit \
+                && ln -s \"${STEAMCMDDIR}/linux32/steamclient.so\" \"${STEAMCMDDIR}/steamservice.so\" \
+                && mkdir -p \"${HOME}/.steam/sdk32\" \
+                && ln -s \"${STEAMCMDDIR}/linux32/steamclient.so\" \"${HOME}/.steam/sdk32/steamclient.so\" \
+                && ln -s \"${STEAMCMDDIR}/linux32/steamcmd\" \"${STEAMCMDDIR}/linux32/steam\" \
+                && mkdir -p \"${HOME}/.steam/sdk64\" \
+                && ln -s \"${STEAMCMDDIR}/linux64/steamclient.so\" \"${HOME}/.steam/sdk64/steamclient.so\" \
+                && ln -s \"${STEAMCMDDIR}/linux64/steamcmd\" \"${STEAMCMDDIR}/linux64/steam\" \
+                && ln -s \"${STEAMCMDDIR}/steamcmd.sh\" \"${STEAMCMDDIR}/steam.sh\"" \
+	# Symlink steamclient.so; So misconfigured dedicated servers can find it
+ 	&& ln -s "${STEAMCMDDIR}/linux64/steamclient.so" "/usr/lib/x86_64-linux-gnu/steamclient.so" \
+	&& rm -rf /var/lib/apt/lists/*
 
 WORKDIR $HOME
 
 USER $USER
-
-ENTRYPOINT []
