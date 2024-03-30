@@ -23,17 +23,30 @@ message BuildSpec {
 
 // Generates an image under the scope of the app.
 message Build {
-  // The name of the feature. Used as a post-fix for identifying this particular app.
+  // The name of the build. Used as a post-fix for identifying this particular app.
   string name = 1;
   BuildSpec spec = 2;
-  FeatureWatch watch = 3;
-  string description = 4;
+  string description = 3;
+  BuildTrigger trigger = 4;
 }
 
-message FeatureWatch {
+message BuildTrigger {
   message GithubRelease {
     string repo = 1;
   }
 
+  message SteamFeedSpec {
+    string title_matcher = 1 [json_name = "title_matcher"];
+    string body_matcher = 2 [json_name = "body_matcher"];
+  }
+
+  message SteamFeed {
+    string app_id = 1 [json_name = "app_id"];
+    SteamFeedSpec spec = 2;
+  }
+
+  // Injects build_arg LATEST_TAG_NAME
   optional GithubRelease github_release = 1 [json_name = "github_release"];
+  // Injects build_arg LATEST_STEAM_VERSION
+  optional SteamFeed steam_feed = 2 [json_name = "steam_feed"];
 }

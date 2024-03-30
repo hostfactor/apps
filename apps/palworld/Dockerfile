@@ -1,19 +1,9 @@
-FROM ghcr.io/hostfactor/apps/base
+FROM ghcr.io/hostfactor/apps/base-builder as builder
 
-ARG HOME=/home/hostfactor
+RUN $HOME/steamcmd/steamcmd.sh +force_install_dir $HOME/app +login anonymous +app_update 2394010 +quit
 
-ARG USER=hostfactor
-ARG GROUP=hostfactor
-ARG UID=1000
-ARG GID=1000
+RUN mkdir -p app/Pal/Saved/Config/LinuxServer
 
-RUN groupadd -g $GID $GROUP && \
-    useradd -M -s /bin/bash -d $HOME -g $GID -u $UID $USER
+COPY derp.ini app/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 
-RUN steamcmd +force_install_dir $HOME/app +login anonymous +app_update 2394010 +quit
-
-WORKDIR $HOME/app
-
-RUN chown -R $UID:$GID .
-
-USER $UID
+CMD ["./app/PalServer.sh"]
