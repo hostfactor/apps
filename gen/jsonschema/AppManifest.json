@@ -21,36 +21,28 @@
             "$ref": "#/definitions/manifest.Build"
           },
           "type": "array"
-        },
-        "dependencies": {
-          "items": {
-            "$ref": "#/definitions/manifest.BuildSpec"
-          },
-          "type": "array",
-          "description": "Images that are built prior to building the app. Can be used for multi-stage builds."
         }
       },
       "additionalProperties": true,
       "type": "object",
-      "title": "App Manifest",
-      "description": "type Manifest struct {\tName        string    `yaml:\"name,omitempty\" json:\"name,omitempty\"`\tAuthor      string    `yaml:\"author,omitempty\" json:\"author,omitempty\"`\tDescription string    `yaml:\"description,omitempty\" json:\"description,omitempty\"`\tFeatures    []Feature `yaml:\"features,omitempty\" json:\"features,omitempty\"`}type Feature struct {\tName        string            `yaml:\"name,omitempty\" json:\"name,omitempty\"`\tTags        []string          `yaml:\"tags,omitempty\" json:\"tags,omitempty\"`\tContext     string            `yaml:\"context,omitempty\" json:\"context,omitempty\"`\tWatch       *FeatureWatch     `yaml:\"watch,omitempty\" json:\"watch,omitempty\"`\tBuildArgs   map[string]string `yaml:\"build_args,omitempty\" json:\"build_args,omitempty\"`\tDescription string            `yaml:\"description\" json:\"description\"`}type FeatureWatch struct {\tGithubRelease *GithubReleaseFeatureWatch `yaml:\"github_release,omitempty\" json:\"github_release,omitempty\"`}type GithubReleaseFeatureWatch struct {\tRepo string `yaml:\"repo,omitempty\" json:\"repo,omitempty\"`}"
+      "title": "App Manifest"
     },
     "manifest.Build": {
       "properties": {
         "name": {
           "type": "string",
-          "description": "The name of the feature. Used as a post-fix for identifying this particular app."
+          "description": "The name of the build. Used as a post-fix for identifying this particular app."
         },
         "spec": {
           "$ref": "#/definitions/manifest.BuildSpec",
           "additionalProperties": true
         },
-        "watch": {
-          "$ref": "#/definitions/manifest.FeatureWatch",
-          "additionalProperties": true
-        },
         "description": {
           "type": "string"
+        },
+        "trigger": {
+          "$ref": "#/definitions/manifest.BuildTrigger",
+          "additionalProperties": true
         }
       },
       "additionalProperties": true,
@@ -81,18 +73,24 @@
       "type": "object",
       "title": "Build Spec"
     },
-    "manifest.FeatureWatch": {
+    "manifest.BuildTrigger": {
       "properties": {
         "github_release": {
-          "$ref": "#/definitions/manifest.FeatureWatch.GithubRelease",
-          "additionalProperties": true
+          "$ref": "#/definitions/manifest.BuildTrigger.GithubRelease",
+          "additionalProperties": true,
+          "description": "Injects build_arg LATEST_TAG_NAME"
+        },
+        "steam_feed": {
+          "$ref": "#/definitions/manifest.BuildTrigger.SteamFeed",
+          "additionalProperties": true,
+          "description": "Injects build_arg LATEST_STEAM_VERSION"
         }
       },
       "additionalProperties": true,
       "type": "object",
-      "title": "Feature Watch"
+      "title": "Build Trigger"
     },
-    "manifest.FeatureWatch.GithubRelease": {
+    "manifest.BuildTrigger.GithubRelease": {
       "properties": {
         "repo": {
           "type": "string"
@@ -101,6 +99,33 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Github Release"
+    },
+    "manifest.BuildTrigger.SteamFeed": {
+      "properties": {
+        "app_id": {
+          "type": "string"
+        },
+        "spec": {
+          "$ref": "#/definitions/manifest.BuildTrigger.SteamFeedSpec",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Steam Feed"
+    },
+    "manifest.BuildTrigger.SteamFeedSpec": {
+      "properties": {
+        "title_matcher": {
+          "type": "string"
+        },
+        "body_matcher": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Steam Feed Spec"
     }
   }
 }

@@ -5,7 +5,6 @@ builds:
   - name: main
     description: A containerized palworld server for hostfactor.io
     spec:
-      context: palworld
       tags:
         - latest
       build_args:

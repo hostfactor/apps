@@ -17,7 +17,7 @@ message AppManifest {
 message BuildSpec {
   repeated string tags = 1;
   // The docker context.
-  string context = 2;
+  optional string context = 2;
   map<string, string> build_args = 3 [json_name = "build_args"];
 }
 

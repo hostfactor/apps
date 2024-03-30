@@ -1,54 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "$ref": "#/definitions/Build",
+  "$ref": "#/definitions/BuildTrigger",
   "definitions": {
-    "Build": {
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "The name of the build. Used as a post-fix for identifying this particular app."
-        },
-        "spec": {
-          "$ref": "#/definitions/manifest.BuildSpec",
-          "additionalProperties": true
-        },
-        "description": {
-          "type": "string"
-        },
-        "trigger": {
-          "$ref": "#/definitions/manifest.BuildTrigger",
-          "additionalProperties": true
-        }
-      },
-      "additionalProperties": true,
-      "type": "object",
-      "title": "Build",
-      "description": "Generates an image under the scope of the app."
-    },
-    "manifest.BuildSpec": {
-      "properties": {
-        "tags": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "context": {
-          "type": "string",
-          "description": "The docker context."
-        },
-        "build_args": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "type": "object"
-        }
-      },
-      "additionalProperties": true,
-      "type": "object",
-      "title": "Build Spec"
-    },
-    "manifest.BuildTrigger": {
+    "BuildTrigger": {
       "properties": {
         "github_release": {
           "$ref": "#/definitions/manifest.BuildTrigger.GithubRelease",
