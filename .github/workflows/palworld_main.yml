@@ -4,7 +4,7 @@ name: palworld-main
     branches:
       - master
     paths:
-      - apps/palworld/palworld/**
+      - apps/palworld/**
       - apps/palworld/app.sha
   workflow_dispatch: {}
 jobs:
@@ -18,7 +18,6 @@ jobs:
         name: Build and deploy image
         with:
           build_args: VERSION=${{ steps.version.outputs.version }}
-          context: apps/palworld/palworld
           file: ""
           image_description: A containerized palworld server for hostfactor.io
           name: palworld
