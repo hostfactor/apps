@@ -130,6 +130,8 @@ func FeatureToGithubAction(appName, manifestFilePath string, b *manifest.Build) 
   }
   if b.Spec.Context != nil {
     buildSpec.Context = filepath.Join(dir, b.GetSpec().GetContext())
+  } else {
+    buildSpec.Context = dir
   }
   buildImageStep := BuildImageGithubAction(buildSpec)
 
