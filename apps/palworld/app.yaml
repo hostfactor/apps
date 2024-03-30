@@ -7,6 +7,6 @@ builds:
     spec:
       context: palworld
       tags:
-        - ${{ steps.version.outputs.version }}
+        - latest
       build_args:
         VERSION: ${{ steps.version.outputs.version }}
