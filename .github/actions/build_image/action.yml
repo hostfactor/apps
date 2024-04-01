@@ -50,6 +50,8 @@ runs:
         build-args: ${{ inputs.build_args }}
         file: ${{ inputs.file }}
         push: true
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
         context: ${{ inputs.context }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: |
