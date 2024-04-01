@@ -10,3 +10,8 @@ builds:
         - latest
       build_args:
         VERSION: ${{ steps.version.outputs.version }}
+    trigger:
+      steam_feed:
+        app_id: "1623730"
+        spec:
+          title_matcher: "v([\.\d]{3,})"
