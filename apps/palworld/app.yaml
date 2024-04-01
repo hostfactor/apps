@@ -7,6 +7,7 @@ builds:
     spec:
       tags:
         - latest
+        - ${{ env.LATEST_STEAM_VERSION }}
       build_args:
         VERSION: ${{ steps.version.outputs.version }}
     trigger:

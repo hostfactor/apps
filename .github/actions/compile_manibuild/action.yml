@@ -11,8 +11,7 @@ runs:
         cache-dependency-path: manibuild/go.sum
         check-latest: true
     - name: Compile manifest builder
-      working-directory: manibuild
+      working-directory: manibuild/cmd
       shell: bash
       run: |
         go build -o /usr/local/bin/manibuild
-        chmod +x /usr/local/bin/manibuild
