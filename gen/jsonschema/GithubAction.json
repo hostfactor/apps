@@ -43,7 +43,7 @@
                     },
                     "type": "object"
                 },
-                "runs_on": {
+                "runs-on": {
                     "type": "string"
                 },
                 "steps": {

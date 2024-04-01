@@ -1,5 +1,6 @@
 name: palworld
 author: https://github.com/eddieowens
+
 description: A containerized palworld server hosted at hostfactor.io
 builds:
   - name: main
