@@ -2,43 +2,45 @@ name: terraria
 author: https://github.com/eddieowens
 description: A containerized terraria server hosted at hostfactor.io
 builds:
-  - name: mobile
-    description: A containerized terraria server for mobile hosted at hostfactor.io
-    spec:
-      context: mobile
-      tags:
-        - mobile-1.4.4.9
-        - mobile-latest
-      build_args:
-        TERRARIA_VERSION: "1449"
-  - name: tshock
-    description: A containerized terraria server with TShock support hosted at hostfactor.io
-    spec:
-      build_args:
-        TERRARIA_VERSION: "1.4.4.9"
-      context: tshock
-      tags:
-        - tshock-1.4.4.9
-        - tshock-latest
-  - name: tmod
-    description: A containerized terraria server with TMod support hosted at hostfactor.io
-    spec:
-      context: tmod
-      tags:
-        - tmod-1.4.4.9
-        - tmod-latest
-      build_args:
-        TERRARIA_VERSION: "1449"
-        TMOD_VERSION: ${{ env.LATEST_TAG_NAME }}
-    trigger:
-      github_release:
-        repo: tModLoader/tModLoader
-  - name: vanilla
-    description: A containerized vanilla terraria server hosted at hostfactor.io
-    spec:
-      context: vanilla
-      tags:
-        - vanilla-1.4.4.9
-        - vanilla-latest
-      build_args:
-        TERRARIA_VERSION: "1449"
+- name: mobile
+  spec:
+    tags:
+    - mobile-1.4.4.9
+    - mobile-latest
+    context: mobile
+    build_args:
+      TERRARIA_VERSION: "1449"
+  description: A containerized terraria server for mobile hosted at hostfactor.io
+- name: tshock
+  spec:
+    tags:
+    - tshock-1.4.4.9
+    - tshock-latest
+    context: tshock
+    build_args:
+      TERRARIA_VERSION: 1.4.4.9
+  description: A containerized terraria server with TShock support hosted at hostfactor.io
+- name: tmod
+  spec:
+    tags:
+    - tmod-1.4.4.9
+    - tmod-latest
+    context: tmod
+    build_args:
+      TERRARIA_VERSION: "1449"
+      TMOD_VERSION: ${{ env.LATEST_TAG_NAME }}
+  description: A containerized terraria server with TMod support hosted at hostfactor.io
+  trigger:
+    outputs:
+      latest_tag: v2024.02.3.0
+    github_release:
+      repo: tModLoader/tModLoader
+- name: vanilla
+  spec:
+    tags:
+    - vanilla-1.4.4.9
+    - vanilla-latest
+    context: vanilla
+    build_args:
+      TERRARIA_VERSION: "1449"
+  description: A containerized vanilla terraria server hosted at hostfactor.io

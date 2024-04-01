@@ -2,16 +2,18 @@ name: palworld
 author: https://github.com/eddieowens
 description: A containerized palworld server hosted at hostfactor.io
 builds:
-  - name: main
-    description: A containerized palworld server for hostfactor.io
-    spec:
-      tags:
-        - latest
-        - ${{ env.LATEST_STEAM_VERSION }}
-      build_args:
-        VERSION: ${{ steps.version.outputs.version }}
-    trigger:
-      steam_feed:
-        app_id: "1623730"
-        spec:
-          title_matcher: "v([\.\d]{3,})"
+- name: main
+  spec:
+    tags:
+    - latest
+    - ${{ env.LATEST_STEAM_VERSION }}
+    build_args:
+      VERSION: ${{ steps.version.outputs.version }}
+  description: A containerized palworld server for hostfactor.io
+  trigger:
+    outputs:
+      steam_news_version: 0.1.5.1
+    steam_feed:
+      app_id: "1623730"
+      spec:
+        title_matcher: "v([\\.\\d]{3,})"
