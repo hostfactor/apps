@@ -25,4 +25,4 @@ jobs:
         uses: ./.github/actions/commit_changes
         with:
           commit_message: |
-            feat(manifests): Recompile manifests
+            feat(manifests): Syncing outputs

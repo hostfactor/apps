@@ -78,7 +78,11 @@ func FetchLatestVersion(mani *manifest.BuildTrigger_SteamFeed) (ver *Version, er
 		t := titleMatcher(f.Title)
 		if t != "" {
 			ver.Name = t
-			ver.Date = *f.UpdatedParsed
+			if f.PublishedParsed != nil {
+				ver.Date = *f.PublishedParsed
+			} else if f.UpdatedParsed != nil {
+				ver.Date = *f.UpdatedParsed
+			}
 			return false
 		}
 

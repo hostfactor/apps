@@ -51,7 +51,7 @@ message GithubActionScheduleCron {
 message GetLatestReleaseResponse {
   string url = 1;
   string assets_url = 2 [json_name = "assets_url"];
-  string id = 3;
+  int32 id = 3;
   string tag_name = 4 [json_name = "tag_name"];
   string name = 5;
 }

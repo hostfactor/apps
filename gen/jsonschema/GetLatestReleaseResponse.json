@@ -11,7 +11,7 @@
                     "type": "string"
                 },
                 "id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "tag_name": {
                     "type": "string"
