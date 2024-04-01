@@ -14,7 +14,7 @@ var CheckoutGithubAction = &github.GithubActionJobStep{
 }
 
 var CompileManibuild = &github.GithubActionJobStep{
-	Uses: "./.github/compile_manibuild",
+	Uses: "./.github/actions/compile_manibuild",
 	Name: "Compile manibuild",
 }
 
