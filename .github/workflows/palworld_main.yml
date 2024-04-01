@@ -27,3 +27,5 @@ jobs:
         tags: |-
           latest
           ${{ env.LATEST_STEAM_VERSION }}
+env:
+  LATEST_STEAM_VERSION: 0.1.5.1

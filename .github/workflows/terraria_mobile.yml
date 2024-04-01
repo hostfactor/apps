@@ -2,26 +2,28 @@ name: terraria-mobile
 "on":
   push:
     branches:
-      - master
+    - master
     paths:
-      - apps/terraria/mobile/**
-      - apps/terraria/app.sha
+    - apps/terraria/mobile/**
+    - apps/terraria/app.sha
   workflow_dispatch: {}
 jobs:
   build_and_deploy_terraria_mobile:
     name: "Build and deploy terraria: mobile"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        name: Checkout
-      - uses: ./.github/actions/build_image
-        name: Build and deploy image
-        with:
-          build_args: TERRARIA_VERSION=1449
-          context: apps/terraria/mobile
-          file: ""
-          image_description: A containerized terraria server for mobile hosted at hostfactor.io
-          name: terraria
-          tags: |-
-            mobile-1.4.4.9
-            mobile-latest
+    - uses: actions/checkout@v4
+      name: Checkout
+    - uses: ./.github/actions/compile_manibuild
+      name: Compile manibuild
+    - uses: ./.github/actions/build_image
+      name: Build and deploy image
+      with:
+        build_args: TERRARIA_VERSION=1449
+        context: apps/terraria/mobile
+        file: ""
+        image_description: A containerized terraria server for mobile hosted at hostfactor.io
+        name: terraria
+        tags: |-
+          mobile-1.4.4.9
+          mobile-latest

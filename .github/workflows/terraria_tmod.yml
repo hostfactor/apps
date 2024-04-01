@@ -1,36 +1,33 @@
 name: terraria-tmod
 "on":
-  schedule:
-    - cron: 0 */12 * * *
   push:
     branches:
-      - master
+    - master
     paths:
-      - apps/terraria/tmod/**
-      - apps/terraria/app.sha
+    - apps/terraria/tmod/**
+    - apps/terraria/app.sha
   workflow_dispatch: {}
 jobs:
   build_and_deploy_terraria_tmod:
     name: "Build and deploy terraria: tmod"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        name: Checkout
-      - uses: ./.github/actions/get_github_release
-        name: Get Github release
-        with:
-          repo: tModLoader/tModLoader
-        id: github_release
-      - uses: ./.github/actions/build_image
-        name: Build and deploy image
-        with:
-          build_args: |-
-            TERRARIA_VERSION=1449
-            TMOD_VERSION=${{ steps.github_release.outputs.tag_name }}
-          context: apps/terraria/tmod
-          file: ""
-          image_description: A containerized terraria server with TMod support hosted at hostfactor.io
-          name: terraria
-          tags: |-
-            tmod-1.4.4.9
-            tmod-latest
+    - uses: actions/checkout@v4
+      name: Checkout
+    - uses: ./.github/actions/compile_manibuild
+      name: Compile manibuild
+    - uses: ./.github/actions/build_image
+      name: Build and deploy image
+      with:
+        build_args: |-
+          TERRARIA_VERSION=1449
+          TMOD_VERSION=${{ env.LATEST_TAG_NAME }}
+        context: apps/terraria/tmod
+        file: ""
+        image_description: A containerized terraria server with TMod support hosted at hostfactor.io
+        name: terraria
+        tags: |-
+          tmod-1.4.4.9
+          tmod-latest
+env:
+  LATEST_TAG_NAME: v2024.02.3.0
