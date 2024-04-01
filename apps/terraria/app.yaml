@@ -29,8 +29,8 @@ builds:
         - tmod-latest
       build_args:
         TERRARIA_VERSION: "1449"
-        TMOD_VERSION: ${{ steps.github_release.outputs.tag_name }}
-    watch:
+        TMOD_VERSION: ${{ env.LATEST_TAG_NAME }}
+    trigger:
       github_release:
         repo: tModLoader/tModLoader
   - name: vanilla

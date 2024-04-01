@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$ref": "#/definitions/GetLatestReleaseResponse",
+    "definitions": {
+        "GetLatestReleaseResponse": {
+            "properties": {
+                "url": {
+                    "type": "string"
+                },
+                "assets_url": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "tag_name": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Get Latest Release Response"
+        }
+    }
+}

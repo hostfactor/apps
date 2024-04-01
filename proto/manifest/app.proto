@@ -31,13 +31,23 @@ message Build {
 }
 
 message BuildTrigger {
+  message Outputs {
+    // The latest tag associated with a GitHub release. From GithubRelease.
+    // Injects env var LATEST_TAG_NAME
+    optional string latest_tag = 1 [json_name = "latest_tag"];
+
+    // The version parsed from the steam news feed. From SteamFeed.
+    // Injects env var LATEST_STEAM_VERSION
+    optional string steam_news_version = 2 [json_name = "steam_news_version"];
+  }
+
   message GithubRelease {
     string repo = 1;
   }
 
   message SteamFeedSpec {
-    string title_matcher = 1 [json_name = "title_matcher"];
-    string body_matcher = 2 [json_name = "body_matcher"];
+    optional string title_matcher = 1 [json_name = "title_matcher"];
+    optional string body_matcher = 2 [json_name = "body_matcher"];
   }
 
   message SteamFeed {
@@ -45,8 +55,12 @@ message BuildTrigger {
     SteamFeedSpec spec = 2;
   }
 
-  // Injects build_arg LATEST_TAG_NAME
-  optional GithubRelease github_release = 1 [json_name = "github_release"];
-  // Injects build_arg LATEST_STEAM_VERSION
-  optional SteamFeed steam_feed = 2 [json_name = "steam_feed"];
+  // The results of the trigger. This field is updated whenever the trigger detects a change
+  // in the value. If this value changes, a downstream GitHub action is triggered which causes
+  // the app to run a rebuild.
+  Outputs outputs = 1;
+
+  optional GithubRelease github_release = 2 [json_name = "github_release"];
+
+  optional SteamFeed steam_feed = 3 [json_name = "steam_feed"];
 }

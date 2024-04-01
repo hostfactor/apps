@@ -1,56 +1,21 @@
-package main
+package manibuild
 
 import (
 	"fmt"
+	"io"
+	"manibuild/gen/go/github"
+	"net/http"
 	"strings"
 )
 
-type GithubAction struct {
-	Name string                     `json:"name,omitempty" yaml:"name,omitempty"`
-	On   *GithubActionTrigger       `json:"on,omitempty" yaml:"on,omitempty"`
-	Jobs map[string]GithubActionJob `json:"jobs,omitempty" yaml:"jobs,omitempty"`
-	Env  map[string]string          `json:"env,omitempty" yaml:"env,omitempty"`
-}
-
-type GithubActionJob struct {
-	Name   string                `json:"name,omitempty" yaml:"name,omitempty"`
-	Uses   string                `json:"uses,omitempty" yaml:"uses,omitempty"`
-	With   map[string]string     `json:"with,omitempty" yaml:"with,omitempty"`
-	RunsOn string                `json:"runs-on,omitempty" yaml:"runs-on,omitempty"`
-	Steps  []GithubActionJobStep `json:"steps,omitempty" yaml:"steps,omitempty"`
-}
-
-type GithubActionJobStep struct {
-	Uses string            `json:"uses,omitempty" yaml:"uses,omitempty"`
-	Run  string            `json:"run,omitempty" yaml:"run,omitempty"`
-	Env  map[string]string `json:"env,omitempty" yaml:"env,omitempty"`
-	Name string            `json:"name,omitempty" yaml:"name,omitempty"`
-	With map[string]string `json:"with,omitempty" yaml:"with,omitempty"`
-	Id   string            `json:"id,omitempty" yaml:"id,omitempty"`
-}
-
-type GithubActionTrigger struct {
-	Schedule         []GithubActionScheduleCron    `json:"schedule,omitempty" yaml:"schedule,omitempty"`
-	Push             *GithubActionPush             `json:"push,omitempty" yaml:"push,omitempty"`
-	WorkflowDispatch *GithubActionWorkflowDispatch `json:"workflow_dispatch,omitempty" yaml:"workflow_dispatch,omitempty"`
-}
-
-type GithubActionWorkflowDispatch struct {
-	Inputs map[string]string `json:"inputs,omitempty" yaml:"inputs,omitempty"`
-}
-
-type GithubActionPush struct {
-	Branches []string `json:"branches,omitempty" yaml:"branches,omitempty"`
-	Paths    []string `json:"paths,omitempty" yaml:"paths,omitempty"`
-}
-
-type GithubActionScheduleCron struct {
-	Cron string `json:"cron,omitempty" yaml:"cron,omitempty"`
-}
-
-var CheckoutGithubAction = GithubActionJobStep{
+var CheckoutGithubAction = &github.GithubActionJobStep{
 	Uses: "actions/checkout@v4",
 	Name: "Checkout",
+}
+
+var CompileManibuild = &github.GithubActionJobStep{
+	Uses: "./.github/compile_manibuild",
+	Name: "Compile manibuild",
 }
 
 type BuildImageGithubActionSpec struct {
@@ -62,8 +27,8 @@ type BuildImageGithubActionSpec struct {
 	BuildArgs        map[string]string
 }
 
-func BuildImageGithubAction(spec BuildImageGithubActionSpec) GithubActionJobStep {
-	out := GithubActionJobStep{
+func BuildImageGithubAction(spec BuildImageGithubActionSpec) *github.GithubActionJobStep {
+	out := &github.GithubActionJobStep{
 		Uses: "./.github/actions/build_image",
 		Name: "Build and deploy image",
 		With: map[string]string{},
@@ -92,18 +57,18 @@ func BuildImageGithubAction(spec BuildImageGithubActionSpec) GithubActionJobStep
 	return out
 }
 
-type GetLatestGithubReleaseActionOutputs struct {
-	TagName string
-}
-
-func GetLatestGithubReleaseAction(repo string) (GithubActionJobStep, GetLatestGithubReleaseActionOutputs) {
-	out := GithubActionJobStep{
-		Uses: "./.github/actions/get_github_release",
-		Name: "Get Github release",
-		Id:   "github_release",
-		With: map[string]string{
-			"repo": repo,
-		},
+func GetLatestGitHubRelease(repo string) (*github.GetLatestReleaseResponse, error) {
+	resp, err := http.Get(fmt.Sprintf("https://api.github.com/repos/%s/releases/latest", repo))
+	if err != nil {
+		return nil, err
 	}
-	return out, GetLatestGithubReleaseActionOutputs{TagName: fmt.Sprintf("steps.%s.outputs.tag_name", out.Id)}
+	defer resp.Body.Close()
+	b, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	out := new(github.GetLatestReleaseResponse)
+	err = Unmarshaller.Unmarshal(b, out)
+	return out, err
 }

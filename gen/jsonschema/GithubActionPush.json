@@ -1,29 +1,25 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "$ref": "#/definitions/BuildSpec",
+    "$ref": "#/definitions/GithubActionPush",
     "definitions": {
-        "BuildSpec": {
+        "GithubActionPush": {
             "properties": {
-                "tags": {
+                "branches": {
                     "items": {
                         "type": "string"
                     },
                     "type": "array"
                 },
-                "context": {
-                    "type": "string",
-                    "description": "The docker context."
-                },
-                "build_args": {
-                    "additionalProperties": {
+                "paths": {
+                    "items": {
                         "type": "string"
                     },
-                    "type": "object"
+                    "type": "array"
                 }
             },
             "additionalProperties": true,
             "type": "object",
-            "title": "Build Spec"
+            "title": "Github Action Push"
         }
     }
 }

@@ -1,60 +1,78 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "$ref": "#/definitions/BuildTrigger",
-  "definitions": {
-    "BuildTrigger": {
-      "properties": {
-        "github_release": {
-          "$ref": "#/definitions/manifest.BuildTrigger.GithubRelease",
-          "additionalProperties": true,
-          "description": "Injects build_arg LATEST_TAG_NAME"
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$ref": "#/definitions/BuildTrigger",
+    "definitions": {
+        "BuildTrigger": {
+            "properties": {
+                "outputs": {
+                    "$ref": "#/definitions/manifest.BuildTrigger.Outputs",
+                    "additionalProperties": true,
+                    "description": "The results of the trigger. This field is updated whenever the trigger detects a change in the value. If this value changes, a downstream GitHub action is triggered which causes the app to run a rebuild."
+                },
+                "github_release": {
+                    "$ref": "#/definitions/manifest.BuildTrigger.GithubRelease",
+                    "additionalProperties": true
+                },
+                "steam_feed": {
+                    "$ref": "#/definitions/manifest.BuildTrigger.SteamFeed",
+                    "additionalProperties": true
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Build Trigger"
         },
-        "steam_feed": {
-          "$ref": "#/definitions/manifest.BuildTrigger.SteamFeed",
-          "additionalProperties": true,
-          "description": "Injects build_arg LATEST_STEAM_VERSION"
-        }
-      },
-      "additionalProperties": true,
-      "type": "object",
-      "title": "Build Trigger"
-    },
-    "manifest.BuildTrigger.GithubRelease": {
-      "properties": {
-        "repo": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": true,
-      "type": "object",
-      "title": "Github Release"
-    },
-    "manifest.BuildTrigger.SteamFeed": {
-      "properties": {
-        "app_id": {
-          "type": "string"
+        "manifest.BuildTrigger.GithubRelease": {
+            "properties": {
+                "repo": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Github Release"
         },
-        "spec": {
-          "$ref": "#/definitions/manifest.BuildTrigger.SteamFeedSpec",
-          "additionalProperties": true
-        }
-      },
-      "additionalProperties": true,
-      "type": "object",
-      "title": "Steam Feed"
-    },
-    "manifest.BuildTrigger.SteamFeedSpec": {
-      "properties": {
-        "title_matcher": {
-          "type": "string"
+        "manifest.BuildTrigger.Outputs": {
+            "properties": {
+                "latest_tag": {
+                    "type": "string",
+                    "description": "The latest tag associated with a GitHub release. From GithubRelease. Injects env var LATEST_TAG_NAME"
+                },
+                "steam_news_version": {
+                    "type": "string",
+                    "description": "The version parsed from the steam news feed. From SteamFeed. Injects env var LATEST_STEAM_VERSION"
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Outputs"
         },
-        "body_matcher": {
-          "type": "string"
+        "manifest.BuildTrigger.SteamFeed": {
+            "properties": {
+                "app_id": {
+                    "type": "string"
+                },
+                "spec": {
+                    "$ref": "#/definitions/manifest.BuildTrigger.SteamFeedSpec",
+                    "additionalProperties": true
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Steam Feed"
+        },
+        "manifest.BuildTrigger.SteamFeedSpec": {
+            "properties": {
+                "title_matcher": {
+                    "type": "string"
+                },
+                "body_matcher": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Steam Feed Spec"
         }
-      },
-      "additionalProperties": true,
-      "type": "object",
-      "title": "Steam Feed Spec"
     }
-  }
 }

@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package github;
+
+option go_package = "github.com/hostfactor/apps/gen/go/github";
+
+message GithubAction {
+  string name = 1;
+  GithubActionTrigger on = 2;
+  map<string, GithubActionJob> jobs = 3;
+  map<string, string> env = 4;
+}
+
+message GithubActionJob {
+  string name = 1;
+  string uses = 2;
+  map<string, string> with = 3;
+  string runs_on = 4 [json_name = "runs_on"];
+  repeated GithubActionJobStep steps = 5;
+}
+
+message GithubActionJobStep {
+  string uses = 1;
+  string run = 2;
+  map<string, string> env = 3;
+  string name = 4;
+  map<string, string> with = 5;
+  string id = 6;
+}
+
+message GithubActionTrigger {
+  repeated GithubActionScheduleCron schedule = 1;
+  GithubActionPush push = 2;
+  GithubActionWorkflowDispatch workflow_dispatch = 3 [json_name = "workflow_dispatch"];
+}
+
+message GithubActionWorkflowDispatch {
+  map<string, string> input = 1;
+}
+
+message GithubActionPush {
+  repeated string branches = 1;
+  repeated string paths = 2;
+}
+
+message GithubActionScheduleCron {
+  string cron = 1;
+}
+
+
+message GetLatestReleaseResponse {
+  string url = 1;
+  string assets_url = 2 [json_name = "assets_url"];
+  string id = 3;
+  string tag_name = 4 [json_name = "tag_name"];
+  string name = 5;
+}

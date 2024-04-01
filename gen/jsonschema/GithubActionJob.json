@@ -1,0 +1,65 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$ref": "#/definitions/GithubActionJob",
+    "definitions": {
+        "GithubActionJob": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "uses": {
+                    "type": "string"
+                },
+                "with": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "runs_on": {
+                    "type": "string"
+                },
+                "steps": {
+                    "items": {
+                        "$ref": "#/definitions/github.GithubActionJobStep"
+                    },
+                    "type": "array"
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Github Action Job"
+        },
+        "github.GithubActionJobStep": {
+            "properties": {
+                "uses": {
+                    "type": "string"
+                },
+                "run": {
+                    "type": "string"
+                },
+                "env": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "with": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "id": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Github Action Job Step"
+        }
+    }
+}

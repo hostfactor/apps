@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$ref": "#/definitions/GithubActionWorkflowDispatch",
+    "definitions": {
+        "GithubActionWorkflowDispatch": {
+            "properties": {
+                "input": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Github Action Workflow Dispatch"
+        }
+    }
+}

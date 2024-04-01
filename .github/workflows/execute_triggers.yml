@@ -1,0 +1,28 @@
+name: Execute triggers for all apps
+
+on:
+  schedule:
+    - cron: 0 */1 * * *
+  workflow_dispatch: { }
+
+jobs:
+  execute_triggers:
+    name: Execute triggers
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CI_GITHUB_TOKEN }}
+      - name: Compile manibuild
+        uses: ./.github/actions/compile_manibuild
+      - name: Compile all changed app manifests
+        run: |
+          find . -name "app.yaml" | while IFS= read -r file; do
+            manibuild -m $file sync trigger
+          done
+      - name: Commit built manifests
+        uses: ./.github/actions/commit_changes
+        with:
+          commit_message: |
+            feat(manifests): Recompile manifests

@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$ref": "#/definitions/GithubActionJobStep",
+    "definitions": {
+        "GithubActionJobStep": {
+            "properties": {
+                "uses": {
+                    "type": "string"
+                },
+                "run": {
+                    "type": "string"
+                },
+                "env": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "with": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "id": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Github Action Job Step"
+        }
+    }
+}

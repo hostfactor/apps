@@ -6,7 +6,7 @@ name: palworld-main
     paths:
       - apps/palworld/**
       - apps/palworld/app.sha
-  workflow_dispatch: {}
+  workflow_dispatch: { }
 jobs:
   build_and_deploy_palworld_main:
     name: "Build and deploy palworld: main"

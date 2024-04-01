@@ -1,0 +1,155 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$ref": "#/definitions/GithubAction",
+    "definitions": {
+        "GithubAction": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "on": {
+                    "$ref": "#/definitions/github.GithubActionTrigger",
+                    "additionalProperties": true
+                },
+                "jobs": {
+                    "additionalProperties": {
+                        "$ref": "#/definitions/github.GithubActionJob",
+                        "additionalProperties": true
+                    },
+                    "type": "object"
+                },
+                "env": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Github Action"
+        },
+        "github.GithubActionJob": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "uses": {
+                    "type": "string"
+                },
+                "with": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "runs_on": {
+                    "type": "string"
+                },
+                "steps": {
+                    "items": {
+                        "$ref": "#/definitions/github.GithubActionJobStep"
+                    },
+                    "type": "array"
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Github Action Job"
+        },
+        "github.GithubActionJobStep": {
+            "properties": {
+                "uses": {
+                    "type": "string"
+                },
+                "run": {
+                    "type": "string"
+                },
+                "env": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "with": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "id": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Github Action Job Step"
+        },
+        "github.GithubActionPush": {
+            "properties": {
+                "branches": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "paths": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Github Action Push"
+        },
+        "github.GithubActionScheduleCron": {
+            "properties": {
+                "cron": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Github Action Schedule Cron"
+        },
+        "github.GithubActionTrigger": {
+            "properties": {
+                "schedule": {
+                    "items": {
+                        "$ref": "#/definitions/github.GithubActionScheduleCron"
+                    },
+                    "type": "array"
+                },
+                "push": {
+                    "$ref": "#/definitions/github.GithubActionPush",
+                    "additionalProperties": true
+                },
+                "workflow_dispatch": {
+                    "$ref": "#/definitions/github.GithubActionWorkflowDispatch",
+                    "additionalProperties": true
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Github Action Trigger"
+        },
+        "github.GithubActionWorkflowDispatch": {
+            "properties": {
+                "input": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Github Action Workflow Dispatch"
+        }
+    }
+}
