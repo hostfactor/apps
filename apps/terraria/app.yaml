@@ -32,7 +32,7 @@ builds:
   description: A containerized terraria server with TMod support hosted at hostfactor.io
   trigger:
     outputs:
-      latest_tag: v2024.02.3.0
+      latest_tag: ""
     github_release:
       repo: tModLoader/tModLoader
 - name: vanilla
