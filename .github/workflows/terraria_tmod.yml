@@ -29,5 +29,3 @@ jobs:
         tags: |-
           tmod-1.4.4.9
           tmod-latest
-env:
-  LATEST_TAG_NAME: v2024.02.3.0
