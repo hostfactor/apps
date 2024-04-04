@@ -12,7 +12,7 @@ builds:
   description: A containerized palworld server for hostfactor.io
   trigger:
     outputs:
-      steam_news_version: 0.1.5.1
+      steam_news_version: 0.2.0.6
     steam_feed:
       app_id: "1623730"
       spec:
