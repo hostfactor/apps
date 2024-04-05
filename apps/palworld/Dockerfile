@@ -10,4 +10,6 @@ COPY PalWorldSettings.ini app/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 
 COPY start.sh start.sh
 
+RUN chown $USER:$GROUP start.sh
+
 CMD ["./start.sh"]
