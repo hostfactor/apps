@@ -6,7 +6,9 @@ RUN $HOME/steamcmd/steamcmd.sh +force_install_dir $HOME/app +login anonymous +ap
 
 RUN mkdir -p app/Pal/Saved/Config/LinuxServer
 
-COPY PalWorldSettings.ini app/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+WORKDIR ./app
+
+COPY PalWorldSettings.ini Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 
 COPY start.sh start.sh
 
