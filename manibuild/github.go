@@ -25,6 +25,7 @@ type BuildImageGithubActionSpec struct {
 	Tags             []string
 	ImageDescription string
 	BuildArgs        map[string]string
+	NoCache          bool
 }
 
 func BuildImageGithubAction(spec BuildImageGithubActionSpec) *github.GithubActionJobStep {
@@ -52,6 +53,10 @@ func BuildImageGithubAction(spec BuildImageGithubActionSpec) *github.GithubActio
 			ba = append(ba, fmt.Sprintf("%s=%s", k, v))
 		}
 		out.With["build_args"] = strings.Join(ba, "\n")
+	}
+
+	if spec.NoCache {
+		out.With["no-cache"] = "true"
 	}
 
 	return out

@@ -115,6 +115,14 @@ func BuildToGithubAction(appName, manifestFilePath string, b *manifest.Build) (*
 		Env:  map[string]string{},
 	}
 
+	buildSpec := BuildImageGithubActionSpec{
+		Name:             appName,
+		Tags:             b.Spec.Tags,
+		ImageDescription: b.Description,
+		BuildArgs:        b.Spec.BuildArgs,
+		NoCache:          b.Trigger != nil,
+	}
+
 	if v := b.GetTrigger().GetOutputs().GetLatestTag(); v != "" {
 		act.Env["LATEST_TAG_NAME"] = v
 	}
@@ -123,12 +131,6 @@ func BuildToGithubAction(appName, manifestFilePath string, b *manifest.Build) (*
 		act.Env["LATEST_STEAM_VERSION"] = v
 	}
 
-	buildSpec := BuildImageGithubActionSpec{
-		Name:             appName,
-		Tags:             b.Spec.Tags,
-		ImageDescription: b.Description,
-		BuildArgs:        b.Spec.BuildArgs,
-	}
 	if b.Spec.Context != nil {
 		buildSpec.Context = filepath.Join(dir, b.GetSpec().GetContext())
 	} else {
