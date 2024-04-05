@@ -6,6 +6,8 @@ RUN $HOME/steamcmd/steamcmd.sh +force_install_dir $HOME/app +login anonymous +ap
 
 RUN mkdir -p app/Pal/Saved/Config/LinuxServer
 
-COPY derp.ini app/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+COPY PalWorldSettings.ini app/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 
-CMD exec ./app/PalServer.sh -port $PORT -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS
+COPY start.sh start.sh
+
+CMD ["./start.sh"]
