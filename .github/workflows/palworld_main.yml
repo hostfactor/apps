@@ -24,6 +24,7 @@ jobs:
         file: ""
         image_description: A containerized palworld server for hostfactor.io
         name: palworld
+        no-cache: "true"
         tags: |-
           latest
           ${{ env.LATEST_STEAM_VERSION }}
