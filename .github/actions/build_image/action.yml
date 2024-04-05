@@ -20,6 +20,10 @@ inputs:
   build_args:
     required: false
     description: Docker build args
+  no-cache:
+    required: false
+    description: Ignore Docker build cache
+    default: "false"
 outputs:
   sha_image_url:
     description: The full URL for the image which uses the sha tag.
@@ -52,6 +56,7 @@ runs:
         push: true
         cache-from: type=gha
         cache-to: type=gha,mode=max
+        no-cache: ${{ inputs.no-cache }}
         context: ${{ inputs.context }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: |
