@@ -8,7 +8,7 @@ RUN mkdir -p app/Pal/Saved/Config/LinuxServer
 
 WORKDIR ./app
 
-COPY PalWorldSettings.ini Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+RUN cp DefaultPalWorldSettings.ini Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 
 COPY start.sh start.sh
 
