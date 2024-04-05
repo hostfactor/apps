@@ -2,4 +2,4 @@
 
 set -ex
 
-./app/PalServer.sh -port "$PORT" -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS
+./PalServer.sh -port "$PORT" -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS "$@"
