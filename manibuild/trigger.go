@@ -71,9 +71,9 @@ func RunTriggers(mani *manifest.AppManifest) (changed bool, err error) {
 				return false, fmt.Errorf("failed to execute steam feed trigger for build %s: %w", build.Name, err)
 			}
 
-			build.Trigger.Outputs.SteamNewsVersion = &ver.Name
-			build.Trigger.Outputs.ReleaseLink = &ver.Link
 			if ver.Name != build.GetTrigger().GetOutputs().GetSteamNewsVersion() {
+				build.Trigger.Outputs.SteamNewsVersion = &ver.Name
+				build.Trigger.Outputs.ReleaseLink = &ver.Link
 				changed = true
 			}
 
