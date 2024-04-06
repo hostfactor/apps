@@ -18,6 +18,13 @@
                 },
                 "name": {
                     "type": "string"
+                },
+                "html_url": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string",
+                    "description": "formatted as RFC3339."
                 }
             },
             "additionalProperties": true,

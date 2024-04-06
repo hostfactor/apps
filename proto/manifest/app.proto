@@ -39,6 +39,12 @@ message BuildTrigger {
     // The version parsed from the steam news feed. From SteamFeed.
     // Injects env var LATEST_STEAM_VERSION
     optional string steam_news_version = 2 [json_name = "steam_news_version"];
+
+    // Date string representing when the the output was created.
+    optional string created_at = 3 [json_name = "created_at"];
+
+    // A link to the release, if available.
+    optional string release_link = 4 [json_name = "release_link"];
   }
 
   message GithubRelease {

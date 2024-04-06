@@ -112,6 +112,14 @@
                 "steam_news_version": {
                     "type": "string",
                     "description": "The version parsed from the steam news feed. From SteamFeed. Injects env var LATEST_STEAM_VERSION"
+                },
+                "created_at": {
+                    "type": "string",
+                    "description": "Date string representing when the the output was created."
+                },
+                "release_link": {
+                    "type": "string",
+                    "description": "A link to the release, if available."
                 }
             },
             "additionalProperties": true,

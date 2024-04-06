@@ -6,6 +6,7 @@ import (
 	"manibuild/gen/go/manifest"
 	"manibuild/steam"
 	"os"
+	"time"
 )
 
 func SyncTrigger(maniPath string) error {
@@ -56,9 +57,11 @@ func RunTriggers(mani *manifest.AppManifest) (changed bool, err error) {
 				return false, fmt.Errorf("failed to get github release for build %s: %w", build.Name, err)
 			}
 
+			build.Trigger.Outputs.LatestTag = &resp.TagName
+			build.Trigger.Outputs.ReleaseLink = &resp.HtmlUrl
+			build.Trigger.Outputs.CreatedAt = &resp.CreatedAt
 			if build.Trigger.Outputs.GetLatestTag() != resp.GetTagName() {
 				changed = true
-				build.Trigger.Outputs.LatestTag = &resp.TagName
 			}
 		}
 
@@ -68,9 +71,19 @@ func RunTriggers(mani *manifest.AppManifest) (changed bool, err error) {
 				return false, fmt.Errorf("failed to execute steam feed trigger for build %s: %w", build.Name, err)
 			}
 
+			build.Trigger.Outputs.SteamNewsVersion = &ver.Name
+			build.Trigger.Outputs.ReleaseLink = &ver.Link
 			if ver.Name != build.GetTrigger().GetOutputs().GetSteamNewsVersion() {
 				changed = true
-				build.Trigger.Outputs.SteamNewsVersion = &ver.Name
+			}
+
+			if !ver.Date.IsZero() {
+				date := ver.Date.Format(time.RFC3339)
+				build.Trigger.Outputs.CreatedAt = &date
+
+				if date != build.GetTrigger().GetOutputs().GetCreatedAt() {
+					changed = true
+				}
 			}
 		}
 	}

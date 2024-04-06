@@ -54,4 +54,7 @@ message GetLatestReleaseResponse {
   int32 id = 3;
   string tag_name = 4 [json_name = "tag_name"];
   string name = 5;
+  string html_url = 6 [json_name = "html_url"];
+  // formatted as RFC3339.
+  string created_at = 7 [json_name = "created_at"];
 }

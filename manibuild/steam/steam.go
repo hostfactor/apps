@@ -26,8 +26,11 @@ func WalkFeed(appId string, walkerFunc FeedWalkerFunc) error {
 }
 
 type Version struct {
-	Name string
-	Date time.Time
+	Name        string
+	Date        time.Time
+	Link        string
+	Title       string
+	Description string
 }
 
 func FetchLatestVersion(mani *manifest.BuildTrigger_SteamFeed) (ver *Version, err error) {
@@ -75,21 +78,24 @@ func FetchLatestVersion(mani *manifest.BuildTrigger_SteamFeed) (ver *Version, er
 
 	ver = &Version{}
 	err = WalkFeed(mani.GetAppId(), func(f *gofeed.Item) bool {
-		t := titleMatcher(f.Title)
-		if t != "" {
-			ver.Name = t
+		title := titleMatcher(f.Title)
+		body := bodyMatcher(f.Description)
+		if title != "" || body != "" {
+			if title != "" {
+				ver.Name = title
+			} else {
+				ver.Name = body
+			}
+
 			if f.PublishedParsed != nil {
 				ver.Date = *f.PublishedParsed
 			} else if f.UpdatedParsed != nil {
 				ver.Date = *f.UpdatedParsed
 			}
-			return false
-		}
 
-		t = bodyMatcher(f.Description)
-		if t != "" {
-			ver.Name = t
-			ver.Date = *f.UpdatedParsed
+			ver.Link = f.Link
+			ver.Title = f.Title
+			ver.Description = f.Description
 			return false
 		}
 
