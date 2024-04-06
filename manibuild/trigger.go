@@ -79,9 +79,9 @@ func RunTriggers(mani *manifest.AppManifest) (changed bool, err error) {
 
 			if !ver.Date.IsZero() {
 				date := ver.Date.Format(time.RFC3339)
-				build.Trigger.Outputs.CreatedAt = &date
 
 				if date != build.GetTrigger().GetOutputs().GetCreatedAt() {
+					build.Trigger.Outputs.CreatedAt = &date
 					changed = true
 				}
 			}
