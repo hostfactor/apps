@@ -29,4 +29,4 @@ jobs:
           latest
           ${{ env.LATEST_STEAM_VERSION }}
 env:
-  LATEST_STEAM_VERSION: 0.2.2.0
+  LATEST_STEAM_VERSION: 0.2.3.0
