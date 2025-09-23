@@ -12,9 +12,9 @@ builds:
   description: A containerized palworld server for hostfactor.io
   trigger:
     outputs:
-      steam_news_version: 0.6.6
+      steam_news_version: ""
       created_at: 2025-09-17T03:06:14Z
-      release_link: https://store.steampowered.com/news/app/1623730/view/689735528964162696
+      release_link: ""
     steam_feed:
       app_id: "1623730"
       spec:
